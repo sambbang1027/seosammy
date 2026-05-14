@@ -1,7 +1,12 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
+  turbopack: {
+    rules: {
+      '*.hdr': {
+        loaders: ['file-loader'],
+        as: '*.hdr',
+      },
+    },
+  },
 };
 
 export default nextConfig;
