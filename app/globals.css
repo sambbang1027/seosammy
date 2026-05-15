@@ -12,8 +12,8 @@ html{
 }
 
 
-
-/* ----- 복잡한 스타일들 (커스텀 등)  ------ */
+/*------------------- 인트로 섹션 ------------------ */
+/* 인트로 배경 */
 @layer utilities {
   .intro-bg {
     background: linear-gradient(
@@ -27,6 +27,7 @@ html{
   }
 }
 
+/* 네비게이션 버튼 */
 @layer utilities {
   .nav-btn {
     @apply rounded-[50px] border border-[rgba(255,255,255,0.60)] text-white font-semibold text-3xl
@@ -36,3 +37,30 @@ html{
     box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.08);
   }
 }
+
+
+/*------------------- about me 섹션 ------------------ */
+/* 타이틀 배경 */
+.bg-title-top,
+.bg-title-bottom {
+  position: absolute;
+  font-size: 150px;
+  font-weight: 800;
+  letter-spacing: 38%;
+  user-select: none;
+  white-space: nowrap;
+  line-height: 1;
+}
+ 
+.bg-title-top {
+  top: -9%;
+  left: 0;
+  overflow: hidden;
+}
+ 
+.bg-title-bottom {
+  bottom: -10%;
+  right: 0;
+  text-align: right;
+}
+ 

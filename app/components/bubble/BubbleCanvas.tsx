@@ -4,26 +4,39 @@ import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import Bubble from "./Bubble";
 import { useBubbles } from "@/app/context/BubbleContext";
+import { useState, useEffect } from "react";
 
 export default function BubbleCanvas() {
     const { bubbles } = useBubbles();
+    const [zoom, setZoom] = useState(100);
+
+    // 반응형 줌 조절 (화면 크기에 따라)
+    useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+            if (width < 768) setZoom(50); // 모바일
+            else if (width < 1024) setZoom(70); // 태블릿
+            else if (width < 1440) setZoom(90); // 작은 데스크탑
+            else setZoom(100); // 데스크탑
+        }
+
+        handleResize(); // 초기 크기 설정
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     return (
-        <Canvas
-            orthographic camera={{ position: [0, 0, 10], zoom: 100 }}
-            gl= {{ alpha: true, antialias: true }} // 투명 배경과 안티앨리어싱
-            style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                background: "transparent",
-            }}
-            onCreated={({gl})=>{
-                gl.setClearColor(0x000000, 0); // Canvas 배경 완전 투명 
-            }}
-        >
+        
+        <div className="hidden md:block absolute inset-0 z-30 pointer-events-none">
+            <Canvas
+                orthographic 
+                camera={{ position: [0, 0, 10], zoom: zoom }}
+                gl= {{ alpha: true, antialias: true }}
+                style={{ background: "transparent" }}
+                onCreated={({gl})=>{
+                    gl.setClearColor(0x000000, 0);
+                }}
+            >
             {/* 전체적인 밝기 */}
             <ambientLight intensity={3} />
             {/* 흰색 메인 조명 */}
@@ -39,5 +52,6 @@ export default function BubbleCanvas() {
                 <Bubble key={index} {...bubble} />
             ))}
         </Canvas>
+    </div>
     );
 }

@@ -4,10 +4,9 @@
 import { useTexture } from "@react-three/drei";
 import { useState, useRef, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/three";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { BubbleConfig } from "../../context/BubbleContext";
-
 
 // ─────────────────────────────────────────
 // 파티클 하나의 데이터 타입
@@ -241,8 +240,12 @@ function BubbleEmpty({ position, size = 1 }: {
   position: [number, number, number];
   size?: number;
 }) {
-  
+  const {viewport} = useThree();
   const meshRef = useRef<THREE.Mesh>(null);
+  /** 반응형 위치 계산 (기준점) */
+  const responsiveX =  (position[0] / 10) * viewport.width; 
+  const responsiveY = (position[1] / 10) * viewport.height; 
+
   // 각 버블마다 다른 위상/주파수 오프셋 (컴포넌트 마운트 시 1회만 생성)
   const [offset] = useState(() => ({
     phase: Math.random() * Math.PI * 2,
@@ -252,7 +255,7 @@ function BubbleEmpty({ position, size = 1 }: {
     ampX:  0.03 + Math.random() * 0.04,
   }));
   const { popped, setPopped, visible, scale, showParticles, handleParticlesComplete } = useBubbleAnimation();
-
+  const [popPosition, setPopPosition] = useState<[number, number, number]>([0, 0, 0]);
 
   // ─────────────────────────────────────────
   // 두둥실 모션 
@@ -261,8 +264,15 @@ function BubbleEmpty({ position, size = 1 }: {
     if (meshRef.current && visible && !popped) {
       const time = state.clock.getElapsedTime();
 
-      meshRef.current.position.y = position[1] + Math.sin(time * offset.freqY + offset.phase) * offset.ampY;
-      meshRef.current.position.x = position[0] + Math.cos(time * offset.freqX + offset.phase) * offset.ampX;
+      const moveX = Math.cos(time * offset.freqX + offset.phase) * offset.ampX;
+      const moveY = Math.sin(time * offset.freqY + offset.phase) * offset.ampY;
+
+      meshRef.current.position.set(
+        responsiveX + moveX,
+        responsiveY + moveY,
+        position[2] 
+      );
+     
       meshRef.current.rotation.x = Math.sin(time * 0.5 + offset.phase) * 0.05;
       meshRef.current.rotation.y = Math.cos(time * 0.3 + offset.phase) * 0.05;
     }
@@ -272,7 +282,11 @@ function BubbleEmpty({ position, size = 1 }: {
 
   // 클릭 시 버블 터뜨리기
   const handlePop = () => {
-    if(!popped) setPopped(true);  
+    if(!popped && meshRef.current){
+      const {x, y, z} = meshRef.current.position;
+      setPopPosition([x, y, z]);
+      setPopped(true);
+    }   
   }
 
   return (
@@ -280,7 +294,7 @@ function BubbleEmpty({ position, size = 1 }: {
       {visible && (
         <animated.mesh
           ref={meshRef}
-          position={position}
+          position={[responsiveX, responsiveY, position[2]]}
           scale={scale}
           onClick={handlePop}
         >
@@ -291,7 +305,7 @@ function BubbleEmpty({ position, size = 1 }: {
       )}
       {/* 터질 때 파티클 보여주기 */}
       {showParticles && (
-        <BubbleParticles origin={position} onComplete={handleParticlesComplete} />
+        <BubbleParticles origin={popPosition} onComplete={handleParticlesComplete} />
       )}
     </>
   );
@@ -307,15 +321,44 @@ function BubbleWithIcon({ position, size = 1, icon, iconRotation = 0, iconPositi
   iconRotation?: number;
   iconPosition?: [number, number, number];
 }) {
+  const {viewport} = useThree();
   const meshRef = useRef<THREE.Mesh>(null);
-  const [offset] = useState(() => ({
+  const { popped, setPopped, visible, scale, showParticles, handleParticlesComplete } = useBubbleAnimation();
+  const [popPosition, setPopPosition] = useState<[number, number, number]>([0, 0, 0]);
+
+  /** 반응형 위치 계산 (기준점) */
+  const responsiveX =  (position[0] / 15) * viewport.width; 
+  const responsiveY = (position[1] / 10) * viewport.height; 
+
+    const [offset] = useState(() => ({
     phase: Math.random() * Math.PI * 2,
     freqY: 0.8 + Math.random() * 0.8,
     freqX: 0.5 + Math.random() * 0.6,
     ampY:  0.08 + Math.random() * 0.07,
     ampX:  0.03 + Math.random() * 0.04,
   }));
-  const { popped, setPopped, visible, scale, showParticles, handleParticlesComplete } = useBubbleAnimation();
+
+  /** 두둥실 모션 */
+  useFrame((state) => {
+    if (meshRef.current && visible && !popped) { 
+      const time = state.clock.getElapsedTime(); // 시간에 따라 위치와 회전 업데이트
+      
+      // 반응형 위치 + 두둥실 모션
+      const moveX = Math.cos(time * offset.freqX + offset.phase) * offset.ampX;
+      const moveY = Math.sin(time * offset.freqY + offset.phase) * offset.ampY;
+
+      meshRef.current.position.set(
+        responsiveX + moveX,
+        responsiveY + moveY,
+        position[2] 
+      )
+
+      meshRef.current.rotation.x = Math.sin(time * 0.5 + offset.phase) * 0.05;
+      meshRef.current.rotation.y = Math.cos(time * 0.3 + offset.phase) * 0.05;
+    }});
+
+
+
 
   // 아이콘 이미지를 텍스처로 로드
   const texture = useTexture(`/icons/${icon}`);
@@ -323,30 +366,19 @@ function BubbleWithIcon({ position, size = 1, icon, iconRotation = 0, iconPositi
   texture.center.set(0.5, 0.5);
 
 
-  // ─────────────────────────────────────────
-  // 두둥실 모션 
-  // ─────────────────────────────────────────
-  useFrame((state) => {
-    if (meshRef.current && visible && !popped) {
-      const time = state.clock.getElapsedTime();
-
-      meshRef.current.position.y = position[1] + Math.sin(time * offset.freqY + offset.phase) * offset.ampY;
-      meshRef.current.position.x = position[0] + Math.cos(time * offset.freqX + offset.phase) * offset.ampX;
-      meshRef.current.rotation.x = Math.sin(time * 0.5 + offset.phase) * 0.05;
-      meshRef.current.rotation.y = Math.cos(time * 0.3 + offset.phase) * 0.05;
-    }
-  });
-
-
     const handlePop = () => {
-    if(!popped) setPopped(true);  
+    if(!popped && meshRef.current){
+      const {x, y, z} = meshRef.current.position;
+      setPopPosition([x, y, z]);
+      setPopped(true);
+    }   
   }
 
   return (
     <>
       {visible && (
         <animated.mesh
-          position={position}
+          position={[responsiveX, responsiveY, position[2]]}
           scale={scale}
           onClick={handlePop} // 클릭 시 터짐
           ref={meshRef}
@@ -374,7 +406,7 @@ function BubbleWithIcon({ position, size = 1, icon, iconRotation = 0, iconPositi
       )}
       {/* 터질 때 파티클 보여주기 */}
       {showParticles && (
-        <BubbleParticles origin={position} onComplete={handleParticlesComplete} />
+        <BubbleParticles origin={popPosition} onComplete={handleParticlesComplete} />
       )}
     </>
   );
