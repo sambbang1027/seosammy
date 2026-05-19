@@ -1,5 +1,5 @@
 /** 3D 버블 캔버스 (조명, 환경) */
-
+"use client";
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import Bubble from "./Bubble";

@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 /* 전역 스타일 */
 @theme {
   --color-primary: #00375B;
@@ -12,37 +11,33 @@ html{
 }
 
 
-/*------------------- 인트로 섹션 ------------------ */
+/*------------------- 인트로 섹션 -------------- */
 /* 인트로 배경 */
-@layer utilities {
-  .intro-bg {
-    background: linear-gradient(
-      0.36deg,
-      rgba(249,213,255,1) 0%,
-      rgba(112,153,195,1) 3%,
-      rgba(31,110,181,1) 36.5%,
-      rgba(9,94,148,1) 68.3%,
-      rgba(0,55,91,1) 100%
-    );
-  }
+@utility intro-bg {
+  background: linear-gradient(
+    0.36deg,
+    rgba(249,213,255,1) 0%,
+    rgba(112,153,195,1) 3%,
+    rgba(31,110,181,1) 36.5%,
+    rgba(9,94,148,1) 68.3%,
+    rgba(0,55,91,1) 100%
+  );
 }
 
-/* 네비게이션 버튼 */
-@layer utilities {
-  .nav-btn {
-    @apply rounded-[50px] border border-[rgba(255,255,255,0.60)] text-white font-semibold text-3xl
-           w-fit px-6 h-[74px] flex items-center justify-center cursor-pointer 
-           backdrop-blur-sm transition-all hover:bg-[rgba(255,255,255,0.15)];
-    background: linear-gradient(175.21deg, rgba(255,255,255,0.17) 0%, rgba(190,190,190,0.14) 100%);
-    box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.08);
-  }
+@utility nav-btn {
+  @apply rounded-[50px] border border-[rgba(255,255,255,0.60)] text-white font-semibold text-3xl
+         w-fit px-6 h-[74px] flex items-center justify-center cursor-pointer 
+         backdrop-blur-sm transition-all hover:bg-[rgba(255,255,255,0.15)];
+  background: linear-gradient(175.21deg, rgba(255,255,255,0.17) 0%, rgba(190,190,190,0.14) 100%);
+  box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.08);
 }
 
 
-/*------------------- about me 섹션 ------------------ */
-/* 타이틀 배경 */
-.bg-title-top,
-.bg-title-bottom {
+/* 
+------------------- ABOUT ME 섹션 --------------
+*/
+
+@utility bg-title-top {
   position: absolute;
   font-size: 150px;
   font-weight: 800;
@@ -50,17 +45,20 @@ html{
   user-select: none;
   white-space: nowrap;
   line-height: 1;
-}
- 
-.bg-title-top {
   top: -9%;
   left: 0;
   overflow: hidden;
 }
- 
-.bg-title-bottom {
+
+@utility bg-title-bottom {
+  position: absolute;
+  font-size: 150px;
+  font-weight: 800;
+  letter-spacing: 38%;
+  user-select: none;
+  white-space: nowrap;
+  line-height: 1;
   bottom: -10%;
   right: 0;
   text-align: right;
 }
- 
