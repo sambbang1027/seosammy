@@ -398,7 +398,7 @@ function BubbleWithIcon({ position, size = 1, icon, iconRotation = 0, iconPositi
             rotation={[0, 0, iconRotation]}       // 아이콘 기울기
           >
             {/* 아이콘 크기 */}
-            <planeGeometry args={[size , size]} />
+            <planeGeometry args={[size*1.2 , size*1.2]} />
             <meshBasicMaterial
               map={texture}                       // 아이콘 텍스처
               transparent                         // 투명 활성화

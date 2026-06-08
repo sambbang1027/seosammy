@@ -2,158 +2,135 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { BubbleProvider } from "@/app/context/BubbleContext";
 import BubbleCanvas from "../bubble/BubbleCanvas";
-import { useState } from "react";
-
-/**
- * 3D 버블들의 위치, 크기, 회전값 정의
- */
-const skillBubbles = [
-  // 1. BACKEND 폴더 (좌측 상단 부근)
-  {
-    position: [-4.5, 3, 0] as [number, number, number],
-    size: 0.9,
-    icon: "backend-folder.svg", // BACKEND 텍스트가 포함된 SVG 파일 권장
-    iconRotation: 0.14, // -8도 회전 변환
-    iconPosition: [0, 0, 1.15] as [number, number, number],
-    skillCategory: "backend",
-  },
-  // 2. FRONTEND 폴더 (우측 상단 부근)
-  {
-    position: [4.8, 2.6, 0] as [number, number, number],
-    size: 0.9,
-    icon: "frontend-folder.svg",
-    iconRotation: -0.1, // 5도 회전 변환
-    iconPosition: [0, 0, 1.15] as [number, number, number],
-    skillCategory: "frontend",
-  },
-  // 3. LANGUAGE 폴더 (중앙 우측 부근, WHAT CAN I DO 타이틀의 'I' 근처)
-  {
-    position: [2, -0.2, 0] as [number, number, number],
-    size: 0.8,
-    icon: "language-folder.svg",
-    iconRotation: 0.1, // 5도 회전 변환
-    iconPosition: [0, 0, 1.0] as [number, number, number],
-    skillCategory: "language",
-  },
-  // 4. DATABASE 폴더 (중앙 하단 부근, 'DO?' 글자 근처)
-  {
-    position: [-1, -1.8, 0] as [number, number, number],
-    size: 0.7,
-    icon: "db-folder.svg",
-    iconRotation: -0.17, // 10도 회전 변환
-    iconPosition: [0, 0, 1.15] as [number, number, number],
-    skillCategory: "database",
-  },
-  // 5. INFRA 폴더 (우측 하단 부근)
-  {
-    position: [5.2, -2.8, 0] as [number, number, number],
-    size: 0.7,
-    icon: "infra-folder.svg",
-    iconRotation: 0.15,
-    iconPosition: [0, 0, 0.9] as [number, number, number],
-    skillCategory: "infra",
-  },
-  // 6. ALL 폴더 (좌측 최하단 부근)
-  {
-    position: [-5.8, -3.2, 0] as [number, number, number],
-    size: 0.6,
-    icon: "all-folder.svg",
-    iconRotation: -0.08,
-    iconPosition: [0, 0, 0.8] as [number, number, number],
-    skillCategory: "all",
-  },
-  // 7. 상단 장식용 핑크 폴더 (텍스트 없음, 살짝 잘림)
-  {
-    position: [1.8, 4.5, -0.5] as [number, number, number],
-    size: 0.7,
-    icon: "folder.svg",
-    iconRotation: -0.35, // 5도 회전
-    iconPosition: [0, 0, 0.9] as [number, number, number],
-  },
-  
-  // ─────────────────────────────────────────
-  // 은은한 배경 데코용 투명 빈 버블
-  // ─────────────────────────────────────────
-  { position: [0.6, 2.2, -1] as [number, number, number], size: 0.55 },   // 중앙 상단 빈 원
-  { position: [0.4, -4.5, -1] as [number, number, number], size: 0.45 },  // 최하단 빈 원
-  { position: [-3, -0.8, -1] as [number, number, number], size: 0.45 }, // 좌측 중간 빈 원
-  { position: [4.5, 0.0, -1] as [number, number, number], size: 0.45 },   // 우측 중간 빈 원
-];
+import { useEffect, useState } from "react";
+import SkillDetailModal from "./SkillDetailModal";
+import { desktopBubbles, mobileSkillList } from "@/app/data/skillData";
+import Image from "next/image";
 
 export default function SkillSection() {
-    const [activeSkill, setActiveSkill] = useState<string | null>(null);
+  const [activeSkill, setActiveSkill] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
-    useState(() => {
-        if(typeof window !== "undefined"){
-            const handleBubblePop = (e: Event) => {
-                const customEvent = e as CustomEvent;
-                if(customEvent.detail){
-                    // 파티클 터지는 순간 모달 온 
-                    setActiveSkill(customEvent.detail);
-                }
-            };
-            window.addEventListener("bubblePop", handleBubblePop);
-            return () => {
-                window.removeEventListener("bubblePop", handleBubblePop);
-            };
-        }});
+  // SSR 하이드레이션 에러 방지 및 초기 모바일 체크
+// 렌더링 흐름이 충돌하지 않도록 마운트 및 리사이즈 큐 분리
+  useEffect(() => {
+    // 1. 화면 크기 감지 함수
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
+    // 2. 초기 리사이즈 실행
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    // 3. 마운트 선언을 브라우저의 다음 이벤트를 처리하는 큐(태스크 큐)로 미뤄서, 모든 초기 렌더링이 끝난 후에 실행되도록 보장
+    const timer = setTimeout(() => {
+      setIsMounted(true);
+    }, 0);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timer);
+    };
+  }, []); 
+
+  /** 3D 버블 터짐 이벤트 전달 (pc 전용) */
+  useEffect(() => {
+    if (isMobile) return;
+    const handleBubblePop = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail) setActiveSkill(customEvent.detail);
+    };
+    window.addEventListener("bubblePop", handleBubblePop);
+    return () => window.removeEventListener("bubblePop", handleBubblePop);
+  }, [isMobile]);
+
+  if (!isMounted) return <div className="h-[832px] bg-white" />;
 
   return (
     <motion.section className="w-full relative">
-      <BubbleProvider bubbles={skillBubbles}>
+      {/* 버블 제공자  */}
+      <BubbleProvider bubbles={isMobile ? [] : desktopBubbles}>
         
-        {/* 전체 컨테이너 및 배경 설정 */}
         <div className="bg-[#ffffff] h-[832px] w-full relative overflow-hidden select-none">
           
-          {/* [레이어 z-0] 백그라운드 타이틀 텍스트 */}
-          <div className="text-primary text-center font-['Inter-ExtraBold',_sans-serif] text-[110px] font-extrabold absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] leading-[110px] tracking-tight pointer-events-none z-0 opacity-90 select-none">
-            WHAT<br />CAN I<br />DO?
-          </div>
+          {/* ─────────────────────────────────────────
+             pc 환경 (768px 이상)에서는 3D 캔버스와 배경 타이틀 텍스트 활성화
+             ───────────────────────────────────────── */}
+          {!isMobile && (
+            <>
+              {/* 백그라운드 타이틀 텍스트 */}
+              <div className="text-primary text-center font-['Inter-ExtraBold',_sans-serif] text-[110px] font-extrabold 
+                    absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] leading-[110px] 
+                    tracking-tight pointer-events-none z-0 opacity-90 select-none">
+                WHAT<br />CAN I<br />DO?
+              </div>
 
-          {/* [레이어 z-10] 3D Canvas 가 타이틀 글자 위로 덮이며 사방에 둥둥 뜨게 됨 */}
-          <div className="absolute inset-0 w-full h-full z-10 pointer-events-auto">
-            <BubbleCanvas />
-          </div>
+              {/* 3D 캔버스 */}
+              <div key="desktop-canvas" className="absolute inset-0 w-full h-full z-10 pointer-events-auto">
+                <BubbleCanvas />
+              </div>
+            </>
+          )}
+
+          {/* ─────────────────────────────────────────
+              모바일 환경  (768px 미만 하이드레이션)
+             ───────────────────────────────────────── */}
+          {isMobile && (
+            <div className="w-full h-full relative overflow-hidden px-4 select-none">
+              {/* 배경 타이포 */}
+              <div className="text-primary text-center font-['Inter-ExtraBold',_sans-serif] text-[80px] font-extrabold absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] leading-[90px] tracking-tight pointer-events-none z-0 opacity-90">
+                WHAT<br />CAN <br /> I<br />DO?
+              </div>
+
+              {/* 프리스타일 폴더들 */}
+              {mobileSkillList.map((skill) => {
+                const { top, left } = skill.position || { top: "50%", left: "50%" };
+                
+                return (
+                  <div
+                    key={skill.id}
+                    className="absolute flex flex-col items-start gap-1.5 select-none"
+                    style={{ top, left }}
+                  >
+                    <button
+                      onClick={() => setActiveSkill(skill.id)}
+                      className="w-[84px] h-[72px] flex items-center justify-center p-1 rounded-2xl active:scale-95 transition-transform duration-200"
+                    >
+                      <Image
+                        src="/icons/folder.svg"
+                        alt={skill.id}
+                        width={76}
+                        height={64}
+                        className="w-full h-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.06)]"
+                      />
+                    </button>
+
+                    <div className="flex items-center gap-1 m-auto">
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: skill.color || '#3b82f6' }} />
+                      <span className="text-[10px] font-mono font-medium text-neutral-500 tracking-tight">
+                        {skill.id.toLowerCase()}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
 
           {/* 상세 모달 창 */}
-            <AnimatePresence>
+          <AnimatePresence>
             {activeSkill && (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 pointer-events-auto"
-                onClick={() => setActiveSkill(null)} // 바깥 클릭 시 닫기
-              >
-                <motion.div 
-                  initial={{ scale: 0.9, y: 20 }}
-                  animate={{ scale: 1, y: 0 }}
-                  exit={{ scale: 0.9, y: 20 }}
-                  className="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full relative"
-                  onClick={(e) => e.stopPropagation()} // 모달 내부 클릭 버블링 방지
-                >
-                  <button 
-                    onClick={() => setActiveSkill(null)}
-                    className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold"
-                  >
-                    ✕
-                  </button>
-                  
-                  {/* 스킬별 맞춤형 콘텐츠 분기 처리 */}
-                  <h3 className="text-2xl font-extrabold text-[#0e2a47] mb-4">{activeSkill} SKILLS</h3>
-                  <div className="text-gray-600 space-y-2">
-                    {activeSkill === "BACKEND" && <p>Node.js, Spring Boot, Express 등 백엔드 기술 스택 상세 설명...</p>}
-                    {activeSkill === "FRONTEND" && <p>React, Next.js, Tailwind CSS 등 프론트엔드 스택 상세 설명...</p>}
-                    {activeSkill === "DATABASE" && <p>PostgreSQL, MongoDB, Redis 등 데이터베이스 상세 설명...</p>}
-                    {/* ... 나머지 스킬 조건부 렌더링 */}
-                  </div>
-                </motion.div>
-              </motion.div>
+              <SkillDetailModal 
+                key={activeSkill}
+                skillCategory={activeSkill}
+                onClose={() => setActiveSkill(null)}
+              />
             )}
           </AnimatePresence>
         </div>
       </BubbleProvider>
     </motion.section>
-    );
+  );
 }

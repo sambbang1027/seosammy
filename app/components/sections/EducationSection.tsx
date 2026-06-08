@@ -1,34 +1,7 @@
 import React from "react";
+import { EDUCATION_DATA } from "../../data/educationData";
 
 const EducationTimeline = () => {
-  // 데이터 배열화 (관리 및 수정이 훨씬 편해집니다)
-  const educationData = [
-    {
-      id: 1,
-      title: "시스원 공공 SI 개발자 양성과정",
-      date: "2025.05 ~ 11",
-      location: "한국소프트웨어산업협회",
-      achievements: [
-        "한국소프트웨어산업협회",
-        "한국소프트웨어산업협회",
-        "한국소프트웨어산업협회",
-      ],
-      position: "right", // PC에서 오른쪽에 배치
-    },
-    {
-      id: 2,
-      title: "MSA기반 풀스택 개발자 양성과정",
-      date: "2024.08 ~ 12",
-      location: "한국소프트웨어산업협회",
-      achievements: [
-        "한국소프트웨어산업협회",
-        "한국소프트웨어산업협회",
-        "한국소프트웨어산업협회",
-      ],
-      position: "left", // PC에서 왼쪽에 배치
-    },
-  ];
-
   return (
     <div className="relative w-full min-h-screen bg-white py-20 overflow-hidden flex flex-col justify-center">
       
@@ -60,7 +33,7 @@ const EducationTimeline = () => {
 
         {/* 타임라인 카드 반복 시작 */}
         <div className="space-y-12 md:space-y-0 relative">
-          {educationData.map((item) => (
+          {EDUCATION_DATA.map((item) => (
             <div
               key={item.id}
               className={`flex flex-col md:flex-row items-start md:items-center relative w-full ${
