@@ -2,23 +2,18 @@
 
 ## 성능 개선
 
-- [ ] **1. `meshPhysicalMaterial` 경량화**
-  - 파일: `app/components/bubble/Bubble.tsx` — `BubbleMaterial`
-  - `transmission` 제거, `meshStandardMaterial` + `opacity` 로 대체
-  - 기대 효과: 기준 FPS 57 → 60 도달
-  - 참고: `docs/performance.md` 원인 3번
-
-- [ ] **2. Canvas 뷰포트 밖 비활성화**
+- [x] **2. Canvas 뷰포트 밖 비활성화**
   - 파일: `app/components/bubble/BubbleCanvas.tsx`
-  - `IntersectionObserver` 또는 R3F `frameloop="demand"` 적용
-  - 기대 효과: 스크롤 중 두 Canvas 동시 실행 문제 해소
-  - 참고: `docs/performance.md` 원인 1번
+  - `IntersectionObserver` + `frameloop` 적용, 뷰포트 이탈 시 렌더링 정지
+  - 결과: FPS 57 → 60, 스크롤 끊김 해소
+  - 참고: `docs/performance.md`
 
-- [ ] **3. `setParticles` → `useRef` 전환**
-  - 파일: `app/components/bubble/Bubble.tsx` — `BubbleParticles`
-  - 파티클 데이터를 `useRef`로 관리, React 상태 업데이트 제거
-  - 기대 효과: 파티클 애니메이션 중 메인 스레드 블로킹 제거
-  - 참고: `docs/performance.md` 원인 2번
+- [~] **1. `meshPhysicalMaterial` 경량화** — 보류
+  - 버블 미감(transmission, iridescence)이 핵심 디자인 요소라 변경 시 손해가 더 큼
+  - FPS 목표 달성으로 필요성 없어짐
+
+- [~] **3. `setParticles` → `useRef` 전환** — 보류
+  - 실제 체감 끊김 없음 확인, 현재 우선순위 없음
 
 ---
 
