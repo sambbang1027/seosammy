@@ -122,7 +122,7 @@ function BubbleParticles({
 
 // 공통 파티클 재질 (버블 느낌)
   const particleMaterialProps = {
-    color: "#bbd7ff",
+    color: "#ffcdef",
     transparent: true,
     transmission: 0.8,
     iridescence: 0.8,
@@ -314,12 +314,13 @@ function BubbleEmpty({ position, size = 1 }: {
 // ─────────────────────────────────────────
 // 아이콘 있는 버블
 // ─────────────────────────────────────────
-function BubbleWithIcon({ position, size = 1, icon, iconRotation = 0, iconPosition = [0, 0, 0.95] }: {
+function BubbleWithIcon({ position, size = 1, icon, iconRotation = 0, iconPosition = [0, 0, 0.95], skillCategory }: {
   position: [number, number, number];
   size?: number;
   icon: string;
   iconRotation?: number;
   iconPosition?: [number, number, number];
+  skillCategory?: string;
 }) {
   const {viewport} = useThree();
   const meshRef = useRef<THREE.Mesh>(null);
@@ -371,6 +372,10 @@ function BubbleWithIcon({ position, size = 1, icon, iconRotation = 0, iconPositi
       const {x, y, z} = meshRef.current.position;
       setPopPosition([x, y, z]);
       setPopped(true);
+
+      if(skillCategory){
+        window.dispatchEvent(new CustomEvent("bubblePop", {detail: skillCategory}));
+      }
     }   
   }
 
@@ -392,8 +397,8 @@ function BubbleWithIcon({ position, size = 1, icon, iconRotation = 0, iconPositi
             position={iconPosition}               // 아이콘 위치 (버블마다 개별 설정)
             rotation={[0, 0, iconRotation]}       // 아이콘 기울기
           >
-            {/* 아이콘 크기 = 버블 크기의 80% */}
-            <planeGeometry args={[size * 0.9, size * 0.9]} />
+            {/* 아이콘 크기 */}
+            <planeGeometry args={[size*1.2 , size*1.2]} />
             <meshBasicMaterial
               map={texture}                       // 아이콘 텍스처
               transparent                         // 투명 활성화
@@ -426,6 +431,7 @@ export default function Bubble(props: BubbleConfig) {
         icon={props.icon}
         iconRotation={props.iconRotation}
         iconPosition={props.iconPosition}
+        skillCategory={props.skillCategory}
       />
     );
   }
