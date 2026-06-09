@@ -1,92 +1,158 @@
-import React from "react";
+"use client";
+import { motion } from "framer-motion";
 import Image from "next/image";
+import { FiGithub, FiExternalLink } from "react-icons/fi";
+import { useState } from "react";
 import { PROJECT_DATA } from "../../data/projectData";
 
-const ProjectSection = () => {
+function BrowserMockup({ src, alt }: { src: string; alt: string }) {
+  const [imgError, setImgError] = useState(false);
+
   return (
-    <div className="relative w-full min-h-screen bg-white py-24 overflow-hidden font-sans flex flex-col justify-center">
-      
-      {/* 배경 대형 텍스트 (워터마크) */}
-      <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 text-[60px] md:text-[150px] font-semibold text-primary/5 select-none pointer-events-none z-0 whitespace-nowrap">
-        PROJECTS
+    <div className="w-full rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,55,91,0.12)] border border-neutral-200/80">
+      {/* 브라우저 크롬 바 */}
+      <div className="bg-[#f0f0f0] px-4 py-[10px] flex items-center gap-2 border-b border-neutral-200">
+        <span className="w-[11px] h-[11px] rounded-full bg-[#FF5F57] flex-shrink-0" />
+        <span className="w-[11px] h-[11px] rounded-full bg-[#FEBC2E] flex-shrink-0" />
+        <span className="w-[11px] h-[11px] rounded-full bg-[#28C840] flex-shrink-0" />
+        <div className="ml-2 flex-1 bg-white rounded-[6px] px-3 py-[5px] text-[11px] text-neutral-400 font-mono truncate">
+          https://sammy.dev
+        </div>
       </div>
 
-      <div className="relative max-w-[1200px] w-full mx-auto px-6 md:px-0 z-10">
-        
-        {/* 모바일/PC 공통 타이틀 */}
-        <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-12 text-center md:text-left">
-          PROJECTS
-        </h2>
-
-        {/* 프로젝트 카드 그리드 (PC 2열, 모바일 1열) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          {PROJECT_DATA.map((project) => (
-            <div
-              key={project.id}
-              className="flex flex-col bg-[rgba(244,249,255,0.5)] border border-[rgba(179,215,238,0.5)] backdrop-blur-md rounded-[30px] overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
-            >
-              
-              {/* 1. 썸네일 영역 (가상 영역 - 추후 Image 태그 주석 해제) */}
-              <div className="w-full h-52 md:h-64 bg-[#e5f1fb] relative overflow-hidden flex items-center justify-center group">
-                {/* 실제 이미지가 준비되면 아래 주석을 해제하세요 */}
-                {/* <Image 
-                  src={project.thumbnailUrl} 
-                  alt={project.title} 
-                  fill 
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                /> */}
-                <span className="text-[#8cb8d9] font-medium text-lg">Image Placeholder</span>
-              </div>
-
-              {/* 2. 프로젝트 정보 영역 */}
-              <div className="p-6 md:p-8 flex flex-col flex-grow">
-                <h3 className="text-2xl font-bold text-[#004571] leading-tight mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-sm text-[#848484] mb-4">{project.period}</p>
-                
-                <p className="text-base text-gray-700 mb-6 font-medium break-keep">
-                  {project.shortDescription}
-                </p>
-
-                <div className="mb-6 flex-grow">
-                  <span className="text-[#004571] font-semibold text-sm block mb-2">Key Achievements</span>
-                  <ul className="space-y-2 text-sm text-gray-600 list-disc list-outside pl-4 break-keep">
-                    {project.achievements.map((achievement, idx) => (
-                      <li key={idx} className="leading-relaxed">{achievement}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* 3. 사용 기술 태그 */}
-                <div className="flex flex-wrap gap-2 mb-8 mt-auto">
-                  {project.techStack.map((tech, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-white text-[#004571] text-[13px] font-semibold rounded-full border border-[rgba(179,215,238,0.8)]">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* 4. 액션 버튼 (GitHub, Notion) */}
-                <div className="flex gap-3 mt-auto">
-                  {project.githubUrl && (
-                    <a href={project.githubUrl} target="_blank" rel="noreferrer" className="flex-1 text-center py-3 bg-white text-[#555] font-bold text-sm rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors">
-                      💻 GitHub
-                    </a>
-                  )}
-                  {project.notionUrl && (
-                    <a href={project.notionUrl} target="_blank" rel="noreferrer" className="flex-1 text-center py-3 bg-[#004571] text-white font-bold text-sm rounded-xl shadow-md hover:bg-[#003456] transition-colors">
-                      📝 상세 회고 보기
-                    </a>
-                  )}
-                </div>
-              </div>
+      {/* 스크린샷 */}
+      <div className="relative w-full aspect-[16/10] bg-gradient-to-br from-[#e8f4fd] to-[#dce9f5]">
+        {!imgError ? (
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className="object-cover"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+              <FiExternalLink className="w-5 h-5 text-primary/40" />
             </div>
-          ))}
-        </div>
+            <span className="text-xs font-mono text-primary/30">screenshot</span>
+          </div>
+        )}
       </div>
     </div>
   );
-};
+}
 
-export default ProjectSection;
+export default function ProjectSection() {
+  return (
+    <section className="w-full bg-white py-24 overflow-hidden">
+      <div className="max-w-[1100px] mx-auto px-6 md:px-8">
+
+        {/* 섹션 헤더 */}
+        <motion.div
+          className="mb-20 md:mb-28"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <span className="text-[12px] font-mono tracking-[0.2em] text-neutral-400 uppercase">
+            / projects
+          </span>
+          <h2 className="text-[clamp(52px,9vw,100px)] font-extrabold text-primary leading-[0.9] mt-1 select-none">
+            WORK
+          </h2>
+        </motion.div>
+
+        {/* 프로젝트 목록 */}
+        <div className="flex flex-col gap-24 md:gap-36">
+          {PROJECT_DATA.map((project, index) => {
+            const isEven = index % 2 === 0;
+            return (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 48 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-10 md:gap-14`}
+              >
+                {/* 목업 영역 */}
+                <div className="w-full md:w-[56%]">
+                  <BrowserMockup src={project.thumbnailUrl} alt={project.title} />
+                </div>
+
+                {/* 텍스트 영역 */}
+                <div className={`w-full md:w-[44%] flex flex-col gap-5 ${isEven ? "md:pl-2" : "md:pr-2"}`}>
+                  <span className="text-[12px] font-mono tracking-[0.15em] text-neutral-300">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <div>
+                    <h3 className="text-[24px] md:text-[30px] font-bold text-primary leading-snug">
+                      {project.title}
+                    </h3>
+                    <p className="text-[12px] font-mono text-neutral-400 mt-1.5">
+                      {project.period}
+                    </p>
+                  </div>
+
+                  <p className="text-[15px] text-neutral-500 leading-relaxed break-keep">
+                    {project.shortDescription}
+                  </p>
+
+                  {/* 기술 태그 */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.techStack.map((tech, i) => (
+                      <span
+                        key={i}
+                        className="px-3 py-1 text-[11px] font-mono font-medium text-primary/70 border border-primary/15 bg-primary/[0.04] rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* 구분선 */}
+                  <div className="w-12 h-[1px] bg-neutral-200 my-1" />
+
+                  {/* 링크 */}
+                  <div className="flex items-center gap-6">
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-2 text-[13px] font-semibold text-neutral-500 hover:text-primary transition-colors duration-200 group"
+                      >
+                        <FiGithub className="w-4 h-4" />
+                        <span>GitHub</span>
+                        <span className="opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-200">
+                          →
+                        </span>
+                      </a>
+                    )}
+                    {project.notionUrl && (
+                      <a
+                        href={project.notionUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-2 text-[13px] font-semibold text-neutral-500 hover:text-primary transition-colors duration-200 group"
+                      >
+                        <FiExternalLink className="w-4 h-4" />
+                        <span>회고 보기</span>
+                        <span className="opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-200">
+                          →
+                        </span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
