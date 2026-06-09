@@ -132,6 +132,20 @@ export default function ProjectSection() {
                         </span>
                       </a>
                     )}
+                    {project.deployUrl && (
+                      <a
+                        href={project.deployUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-2 text-[13px] font-semibold text-neutral-500 hover:text-primary transition-colors duration-200 group"
+                      >
+                        <FiExternalLink className="w-4 h-4" />
+                        <span>라이브</span>
+                        <span className="opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-200">
+                          →
+                        </span>
+                      </a>
+                    )}
                     {project.notionUrl && (
                       <a
                         href={project.notionUrl}
