@@ -43,7 +43,7 @@ export const PROJECT_DATA: ProjectItem[] = [
   },
   {
     id: 2,
-    isFeatured: true,
+    isFeatured: false,
     title: "북플리 (Bookpli)",
     period: "2024.11 ~ 2024.12",
     shortDescription:
@@ -102,30 +102,28 @@ export const PROJECT_DATA: ProjectItem[] = [
     notionUrl: "", // TODO: 노션 링크 추가
   },
   {
-    id: 5,
-    isFeatured: false,
-    title: "HaeHae",
-    period: "2025.05 ~ 2025.07",
+    id: 7,
+    isFeatured: true,
+    title: "포트폴리오 사이트",
+    period: "2025.06 ~ 진행중",
     shortDescription:
-      "지역·주거 유형 기반 분리수거 정보 제공 모바일 앱. 이메일/소셜 로그인, JWT 인증, 마이페이지 파트 담당.",
+      "Next.js와 Three.js 기반으로 직접 설계·구현한 개인 포트폴리오. 3D 버블 인터랙션, 스크롤 기반 애니메이션, 뷰포트 진입 시 렌더링 제어 등 프론트엔드 기술을 직접 구현했습니다.",
     techStack: [
-      "React Native",
+      "Next.js",
       "TypeScript",
-      "Java 17",
-      "Spring Boot",
-      "Spring Data JPA",
-      "MySQL",
-      "KakaoAPI",
-      "SendGrid",
+      "Three.js",
+      "React Three Fiber",
+      "Framer Motion",
+      "Tailwind CSS v4",
     ],
     achievements: [
-      "Kakao OAuth 토큰을 서버로 전달해 자체 JWT 발급하는 인증 흐름 통합",
-      "EncryptedStorage로 토큰 암호화 저장",
-      "SendGrid 이메일 인증으로 회원가입 유효성 검증",
+      "IntersectionObserver + frameloop 제어로 뷰포트 밖 3D 렌더링 비활성화 (FPS 57 → 60)",
+      "Tailwind CSS v4 @theme 기반 디자인 토큰 시스템 구축",
+      "isFeatured 기반 메인/사이드 프로젝트 레이아웃 분리 설계",
     ],
-    thumbnailUrl: "/images/project-haehae.png",
-    githubUrl: "https://github.com/sambbang1027/haehae",
-    notionUrl: "", // TODO: 노션 링크 추가
+    thumbnailUrl: "/images/project-portfolio.png",
+    githubUrl: "https://github.com/sambbang1027/seosammy",
+    notionUrl: "",
   },
   {
     id: 6,

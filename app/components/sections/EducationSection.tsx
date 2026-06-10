@@ -1,80 +1,85 @@
-import React from "react";
+"use client";
+import { motion } from "framer-motion";
+import Image from "next/image";
 import { EDUCATION_DATA } from "../../data/educationData";
 
-const EducationTimeline = () => {
+export default function EducationSection() {
   return (
-    <div className="relative w-full min-h-screen bg-white py-20 overflow-hidden flex flex-col justify-center">
-      
-      {/* 배경 큰 글자: EDUCA (위쪽 왼쪽) */}
-      <div className="hidden md:block absolute left-[-20px] top-[5%] 
-            text-[60px] md:text-[150px] font-semibold text-[#004571]/10 md:text-primary
-            select-none pointer-events-none z-0">
+    <div className="relative w-full bg-white py-24 overflow-hidden">
+
+      {/* 배경 장식 텍스트 */}
+      <div className="hidden md:block absolute left-[-12px] top-[12%] text-[clamp(60px,10vw,130px)] font-semibold text-primary select-none pointer-events-none leading-none">
         EDUCA
       </div>
-
-      {/* 배경 큰 글자: TION (아래쪽 오른쪽) */}
-      <div className="hidden md:block absolute right-[-20px] bottom-[5%]  
-            text-[60px] md:text-[150px] font-semibold text-gray-300/30 md:text-secondary
-            select-none pointer-events-none z-0">
+      <div className="hidden md:block absolute right-[-12px] bottom-[15%] text-[clamp(60px,10vw,130px)] font-semibold text-neutral-200 select-none pointer-events-none leading-none">
         TION
       </div>
 
-        {/* 모바일용 타이틀  */}
-    <div className="md:hidden text-4xl font-bold text-secondary top-6 mb-10">
-    EDUCATION
-    </div>
+      {/* 모바일 타이틀 */}
+      <p className="md:hidden text-2xl font-bold text-primary px-6 mb-10">EDUCATION</p>
 
+      {/* 타임라인 컨테이너 */}
+      <div className="relative max-w-[1100px] w-full mx-auto px-6 md:px-8 z-10">
 
-      {/* 타임라인 메인 컨테이너 */}
-      <div className="relative max-w-[1200px] w-full mx-auto px-6 md:px-0 z-10">
-        
-        {/* 중앙 세로선 (모바일에서는 왼쪽 정렬, PC(md)에서는 정중앙) */}
-        <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-[3px] bg-primary transform md:-translate-x-1/2" />
+        {/* 중앙 세로선 — dot 사이만 연결 */}
 
-        {/* 타임라인 카드 반복 시작 */}
-        <div className="space-y-12 md:space-y-0 relative">
-          {EDUCATION_DATA.map((item) => (
-            <div
+        <div className="py-4 md:py-0">
+          {EDUCATION_DATA.map((item, index) => (
+            <motion.div
               key={item.id}
-              className={`flex flex-col md:flex-row items-start md:items-center relative w-full ${
-                item.position === "right" ? "md:flex-row-reverse" : ""
+              initial={{ opacity: 0, y: 36 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className={`relative flex items-start md:items-center w-full md:py-5 mb-10 md:mb-0 ${
+                item.position === "right"
+                  ? "flex-col md:flex-row-reverse"
+                  : "flex-col md:flex-row"
               }`}
             >
-              {/* 1. 타임라인 동그라미 점 */}
-              <div className="absolute left-[1.5px] md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-white transform -translate-x-1/2 z-20" />
+            {/* 타임라인 점 & 아래로 길게 뻗는 세로선 */}
+            <div className="absolute left-6 md:left-1/2 top-0 md:top-8 -translate-x-1/2 z-20 flex flex-col items-center bottom-[-40px]">
+              {/* 점 (dot) */}
+              <div className="w-4 h-4 rounded-full bg-primary mt-[3px] md:mt-1 flex-shrink-0" />
+              
+              {/* 아래로 뻗는 선 (다음 카드 영역까지 길게 연결) */}
+              <div className="w-[2px] bg-primary/40 flex-grow" />
+            </div>
 
-              {/* 2. 카드 콘텐츠 박스 */}
-              {/* 모바일에서는 선 오른쪽에 배치, PC에서는 원래 정해진 방향(left/right)으로 배치 */}
-              <div className={`w-full md:w-[calc(50%-40px)] pl-8 md:pl-0 ${
-                item.position === "right" ? "md:pr-10" : "md:pl-10"
-              }`}>
-                <div className="w-full bg-[rgba(244,249,255,0.4)] border border-[rgba(179,215,238,0.4)] backdrop-blur-md rounded-[30px] p-6 md:p-8 shadow-xl transition-all hover:scale-[1.01]">
-                  
-                  {/* 과정 타이틀 */}
-                  <h3 className="text-xl md:text-[23px] font-semibold text-black mb-4 leading-tight">
+              {/* 카드 */}
+              <div
+                className={`w-full md:w-[calc(50%-52px)] pl-12 md:pl-0 ${
+                  item.position === "right" ? "md:pl-12" : "md:pr-12"
+                }`}
+              >
+                <div className="bg-white/40 backdrop-blur-md border border-white/60 rounded-2xl p-6 md:p-8 shadow-[0_4px_24px_rgba(0,55,91,0.08)] hover:shadow-[0_8px_32px_rgba(0,55,91,0.13)] transition-shadow duration-300">
+
+                  {/* 과정명 */}
+                  <h3 className="text-[17px] md:text-[20px] font-semibold text-primary leading-snug mb-3">
                     {item.title}
                   </h3>
 
-                  {/* 기간 & 장소 레이아웃 */}
-                  <div className="flex flex-col sm:flex-row sm:items-center text-sm md:text-base text-gray-500 gap-2 sm:gap-6 mb-4">
+                  {/* 기간 & 장소 */}
+                  <div className="flex flex-wrap items-center gap-4 text-[13px] text-neutral-400 mb-5">
                     <div className="flex items-center gap-1.5">
-                      <img className="w-4 h-4" src="icons/calendar-icon.svg" alt="calendar" />
+                      <Image src="/icons/calendar-icon.svg" alt="calendar" width={14} height={14} />
                       <span>{item.date}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <img className="w-4 h-4" src="icons/si_pin-fill.svg" alt="location" />
+                      <Image src="/icons/si_pin-fill.svg" alt="location" width={14} height={14} />
                       <span>{item.location}</span>
                     </div>
                   </div>
 
-                  {/* 성과 리스트 구역 */}
-                  <div className="border-t border-[rgba(179,215,238,0.3)] pt-4">
-                    <span className="text-[#004571] font-medium text-base md:text-lg block mb-2">
+                  {/* 성과 */}
+                  <div className="border-t border-primary/10 pt-4">
+                    <span className="text-[13px] font-semibold text-primary block mb-3">
                       성과
                     </span>
-                    <ul className="space-y-1.5 text-sm md:text-base text-gray-700 pl-2 list-disc list-inside">
-                      {item.achievements.map((desc, index) => (
-                        <li key={index} className="leading-relaxed">
+                    <ul className="space-y-2">
+                      {item.achievements.map((desc, i) => (
+                        <li key={i} className="flex items-start gap-2 text-[13px] text-neutral-500 leading-relaxed">
+                          <span className="mt-[7px] w-1 h-1 rounded-full bg-primary/40 flex-shrink-0" />
                           {desc}
                         </li>
                       ))}
@@ -84,15 +89,13 @@ const EducationTimeline = () => {
                 </div>
               </div>
 
-              {/* 3. PC 전용 빈 공간 채우기 용도 (좌우 밸런스 유지) */}
-              <div className="hidden md:block w-[calc(50%-40px)]" />
-            </div>
+              {/* 빈 공간 */}
+              <div className="hidden md:block w-[calc(50%-52px)]" />
+            </motion.div>
           ))}
         </div>
 
       </div>
     </div>
   );
-};
-
-export default EducationTimeline;
+}
