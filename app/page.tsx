@@ -1,14 +1,14 @@
 import IntroSection from "./components/sections/IntroSection";
 import AboutMe from "./components/sections/AboutMeSection";
 import EducationSection from "./components/sections/EducationSection";
-import SkillSection from "./components/sections/SkillSection"
+import SkillSection from "./components/sections/SkillSection";
 import ProjectSection from "./components/sections/ProjectSection";
+import SideProjectSection from "./components/sections/SideProjectSection";
 
 export default function Home() {
   return (
-      <main>
-        <IntroSection />
-        
+    <main>
+      <IntroSection />
       <section id="about">
         <AboutMe />
         <EducationSection />
@@ -18,7 +18,8 @@ export default function Home() {
       </section>
       <section id="project">
         <ProjectSection />
+        <SideProjectSection />
       </section>
-      </main>
+    </main>
   );
 }
