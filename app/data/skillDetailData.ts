@@ -3,7 +3,7 @@ import {
   SiJavascript, SiTypescript,
   SiReact, SiVuedotjs, SiJquery,
   SiSpring,
-  SiPostgresql, SiMysql, SiOracle,
+  SiPostgresql, SiMysql,
   SiGooglecloud, SiFirebase, SiGithubactions,
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
