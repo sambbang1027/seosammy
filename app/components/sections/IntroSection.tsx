@@ -39,7 +39,7 @@ const inrtoBubbles = [
 const NAV_ITEMS = [
   { label: "About Me", target: "about", className: "absolute left-[-10px] top-[30%]", rotate: "-rotate-[10deg]" },
   { label: "Skill",    target: "skill",  className: "absolute right-[0px] top-[60%]", rotate: "rotate-[10deg]" },
-  { label: "Project",  target: "project", className: "absolute left-[70px] bottom-[-10%]", rotate: "rotate-[8deg]" },
+  { label: "Project",  target: "project", className: "absolute left-[70px] bottom-[8%]", rotate: "rotate-[8deg]" },
 ];
 
 const scrollTo = (id: string) => {

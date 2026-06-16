@@ -1,29 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
-import { useState } from "react";
 import { PROJECT_DATA } from "../../data/projectData";
-
-function ProjectImage({ src, alt }: { src: string; alt: string }) {
-  const [imgError, setImgError] = useState(false);
-
-  return (
-    <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(0,55,91,0.10)]">
-      {!imgError ? (
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className="object-cover"
-          onError={() => setImgError(true)}
-        />
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-[#c8dcea] to-[#b8cfe0]" />
-      )}
-    </div>
-  );
-}
+import ImageSlider from "../ui/ImageSlider";
 
 export default function ProjectSection() {
   const featured = PROJECT_DATA.filter((p) => p.isFeatured);
@@ -63,7 +42,7 @@ export default function ProjectSection() {
                 className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-10 md:gap-14`}
               >
                 <div className="w-full md:w-[56%]">
-                  <ProjectImage src={project.thumbnailUrl} alt={project.title} />
+                  <ImageSlider images={project.images} title={project.title} aspectClass="aspect-[16/10]" showArrows={false} />
                 </div>
                 <div className={`w-full md:w-[44%] flex flex-col gap-5 ${isEven ? "md:pl-2" : "md:pr-2"}`}>
                   <span className="text-[12px] font-mono tracking-[0.15em] text-neutral-300">

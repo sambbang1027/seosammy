@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { CATEGORIES, CategoryType, SKILL_DATA } from "@/app/data/skillDetailData";
 
 interface SkillDetailModalProps {
@@ -92,16 +91,7 @@ export default function SkillDetailModal({ skillCategory, onClose }: SkillDetail
                 className="py-5 border-b border-neutral-100 last:border-b-0"
               >
                 <div className="flex items-center gap-2.5 mb-2">
-                  <div className="w-6 h-6 flex-shrink-0 relative">
-                    <Image
-                      src={`/icons/${skill.icon}`}
-                      alt={skill.name}
-                      width={24}
-                      height={24}
-                      className="w-full h-full object-contain"
-                      onError={(e) => { e.currentTarget.style.display = "none"; }}
-                    />
-                  </div>
+                  <skill.icon className="w-5 h-5 text-primary flex-shrink-0" />
                   <h4 className="text-[16px] font-semibold text-neutral-900">
                     {skill.name}
                   </h4>
@@ -190,16 +180,7 @@ export default function SkillDetailModal({ skillCategory, onClose }: SkillDetail
                 className="py-5 border-b border-neutral-100 last:border-b-0"
               >
                 <div className="flex items-center gap-2.5 mb-2">
-                  <div className="w-[22px] h-[22px] flex-shrink-0 relative">
-                    <Image
-                      src={`/icons/${skill.icon}`}
-                      alt={skill.name}
-                      width={22}
-                      height={22}
-                      className="w-full h-full object-contain"
-                      onError={(e) => { e.currentTarget.style.display = "none"; }}
-                    />
-                  </div>
+                  <skill.icon className="w-[18px] h-[18px] text-primary flex-shrink-0" />
                   <h4 className="text-[15px] font-semibold text-neutral-900">
                     {skill.name}
                   </h4>

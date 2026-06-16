@@ -1,12 +1,12 @@
 "use client";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { FiArrowUpRight, FiGithub } from "react-icons/fi";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { FiArrowUpRight, FiGithub, FiExternalLink } from "react-icons/fi";
 import { PROJECT_DATA, ProjectItem } from "../../data/projectData";
+import ImageSlider from "../ui/ImageSlider";
 
 function SideProjectCard({ project, index }: { project: ProjectItem; index: number }) {
-  const [imgError, setImgError] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const primaryLink = project.deployUrl || project.notionUrl || project.githubUrl;
 
   return (
@@ -17,32 +17,24 @@ function SideProjectCard({ project, index }: { project: ProjectItem; index: numb
       transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       className="group flex flex-col gap-3"
     >
-      {/* 썸네일 */}
-      <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden">
-        {!imgError ? (
-          <Image
-            src={project.thumbnailUrl}
-            alt={project.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-            onError={() => setImgError(true)}
-          />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-[#c8dcea] to-[#b8cfe0]" />
-        )}
+      {/* 썸네일 + 슬라이더 */}
+      <div
+        className="relative"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <ImageSlider images={project.images} title={project.title} aspectClass="aspect-[4/3]" showArrows={false} playing={hovered} />
 
-        {/* 호버 오버레이 */}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300" />
-
-        {/* 중앙 원형 버튼 */}
+        {/* 호버 오버레이 + 링크 버튼 */}
+        <div className={`absolute inset-0 rounded-xl transition-all duration-300 pointer-events-none ${hovered ? "bg-black/40" : "bg-black/0"}`} />
         {primaryLink && (
           <a
             href={primaryLink}
             target="_blank"
             rel="noreferrer"
-            className="absolute inset-0 flex items-center justify-center"
+            className="absolute inset-0 flex items-center justify-center rounded-xl"
           >
-            <span className="w-11 h-11 rounded-full bg-white flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 shadow-lg">
+            <span className={`w-11 h-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 shadow-lg ${hovered ? "opacity-100 scale-100" : "opacity-0 scale-75"}`}>
               <FiArrowUpRight className="w-5 h-5 text-primary" strokeWidth={2.5} />
             </span>
           </a>
@@ -66,10 +58,16 @@ function SideProjectCard({ project, index }: { project: ProjectItem; index: numb
               <span>code</span>
             </a>
           )}
-          {project.period === "진행중" && (
-            <span className="text-[10px] font-mono text-amber-500 bg-amber-50 px-2 py-0.5 rounded-full">
-              진행중
-            </span>
+          {project.notionUrl && (
+            <a
+              href={project.notionUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1 text-[11px] font-mono text-neutral-400 hover:text-primary transition-colors duration-200"
+            >
+              <FiExternalLink className="w-3 h-3" />
+              <span>notion</span>
+            </a>
           )}
         </div>
       </div>
