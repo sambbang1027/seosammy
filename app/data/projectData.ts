@@ -6,7 +6,7 @@ export interface ProjectItem {
   shortDescription: string;
   techStack: string[];
   achievements: string[];
-  thumbnailUrl: string;
+  images: string[];
   githubUrl?: string;
   deployUrl?: string;
   notionUrl?: string;
@@ -37,13 +37,21 @@ export const PROJECT_DATA: ProjectItem[] = [
       "Joyride 기반 튜토리얼로 커스터마이징 UX 개선",
       "LLM 기반 쿼리 실행 계획 자동 해석 기능 구현",
     ],
-    thumbnailUrl: "/images/project-dajangan.png",
+    images: [
+      "/dajanggan/1.png",
+      "/dajanggan/2.png",
+      "/dajanggan/3.png",
+      "/dajanggan/4.png",
+      "/dajanggan/5.png",
+      "/dajanggan/6.png",
+      "/dajanggan/7.png",
+    ],
     githubUrl: "https://github.com/sysoneFinal",
-    notionUrl: "", // TODO: 노션 링크 추가
+    notionUrl: "https://app.notion.com/p/3584c4b52aec80d4b42cff96a695679d?v=3584c4b52aec8034b665000caa7e38bc&source=copy_link",
   },
   {
     id: 2,
-    isFeatured: false,
+    isFeatured: true,
     title: "북플리 (Bookpli)",
     period: "2024.11 ~ 2024.12",
     shortDescription:
@@ -61,33 +69,33 @@ export const PROJECT_DATA: ProjectItem[] = [
       "Firebase Storage로 이미지 처리해 DB 부하 분산",
       "OpenFeign 기반 서비스 간 통신 구조 설계",
     ],
-    thumbnailUrl: "/images/project-bookpli.png",
+    images: ["/bookpli/1.png", "/bookpli/2.png"],
     githubUrl: "https://github.com/mae02142/bookpli",
-    notionUrl: "", // TODO: 노션 링크 추가
+    notionUrl: "https://app.notion.com/p/3584c4b52aec80b0bccbde8ead7c8b5c?v=3584c4b52aec8034b665000caa7e38bc&source=copy_link",
   },
-  {
-    id: 3,
-    isFeatured: false,
-    title: "숨통 (Soomtong)",
-    period: "진행중",
-    shortDescription:
-      "공공 혼잡도 데이터 + 역사 구조 기반 칸별 추정 알고리즘을 활용한 지하철 실용 유틸리티. 칸별 공개 API가 없는 환경에서 역사 구조를 직접 분석해 가중치 모델을 설계했습니다.",
-    techStack: ["React", "Vite", "Tailwind CSS", "Geolocation API"],
-    achievements: [
-      "역사 구조(계단·환승 통로 위치) 직접 분석해 칸별 가중치 알고리즘 설계",
-      "3색 신호등 UI로 혼잡도 직관적 시각화",
-      "Vite proxy로 공공 API CORS 처리",
-    ],
-    thumbnailUrl: "/images/project-soomtong.png",
-    githubUrl: "https://github.com/sambbang1027/soomtong",
-    deployUrl: "https://soomtong-eta.vercel.app/",
-    notionUrl: "", // TODO: 노션 링크 추가
-  },
+  // {
+  //   id: 3,
+  //   isFeatured: false,
+  //   title: "숨통 (Soomtong)",
+  //   period: "진행중",
+  //   shortDescription:
+  //     "공공 혼잡도 데이터 + 역사 구조 기반 칸별 추정 알고리즘을 활용한 지하철 실용 유틸리티. 칸별 공개 API가 없는 환경에서 역사 구조를 직접 분석해 가중치 모델을 설계했습니다.",
+  //   techStack: ["React", "Vite", "Tailwind CSS", "Geolocation API"],
+  //   achievements: [
+  //     "역사 구조(계단·환승 통로 위치) 직접 분석해 칸별 가중치 알고리즘 설계",
+  //     "3색 신호등 UI로 혼잡도 직관적 시각화",
+  //     "Vite proxy로 공공 API CORS 처리",
+  //   ],
+  //   thumbnailUrl: "/images/project-soomtong.png",
+  //   githubUrl: "https://github.com/sambbang1027/soomtong",
+  //   deployUrl: "https://soomtong-eta.vercel.app/",
+  //   notionUrl: "",
+  // },
   {
     id: 4,
     isFeatured: false,
     title: "포도알 파이터 (Podobal Fighter)",
-    period: "진행중",
+    period: "2026.06",
     shortDescription:
       "멜론티켓 예매 프로세스를 완전히 시뮬레이션하는 티켓팅 트레이너 Web App. 정각 타임어택부터 대기열·좌석 선점·보안문자까지 6단계 플로우를 재현합니다.",
     techStack: ["React", "Vite", "Tailwind CSS", "Zustand"],
@@ -96,10 +104,18 @@ export const PROJECT_DATA: ProjectItem[] = [
       "F5 패널티·봇 시뮬레이션 등 실제 예매 환경 재현",
       "반응속도 측정값을 다음 스테이지 난이도 가중치로 연산",
     ],
-    thumbnailUrl: "/images/project-podoal.png",
+    images: [
+      "/podor/podo1.png",
+      "/podor/podo2.png",
+      "/podor/podo3.png",
+      "/podor/podo4.png",
+      "/podor/podo5.png",
+      "/podor/podo6.png",
+      "/podor/podo7.png",
+    ],
     githubUrl: "https://github.com/sambbang1027/podoal",
     deployUrl: "https://sambbang1027.github.io/podoal/",
-    notionUrl: "", // TODO: 노션 링크 추가
+    notionUrl: "https://app.notion.com/p/37f4c4b52aec809a9b43def72a330a73?v=3584c4b52aec8034b665000caa7e38bc&source=copy_link",
   },
   {
     id: 7,
@@ -121,25 +137,31 @@ export const PROJECT_DATA: ProjectItem[] = [
       "Tailwind CSS v4 @theme 기반 디자인 토큰 시스템 구축",
       "isFeatured 기반 메인/사이드 프로젝트 레이아웃 분리 설계",
     ],
-    thumbnailUrl: "/images/project-portfolio.png",
-    githubUrl: "https://github.com/sambbang1027/seosammy",
-    notionUrl: "",
-  },
-  {
-    id: 6,
-    isFeatured: false,
-    title: "빌려가유",
-    period: "2025.09",
-    shortDescription:
-      "농기계 등록부터 예약·사용·점검·재사용까지 전체 라이프사이클을 관리하는 통합 시스템. 점검 관리, 예약 승인/반려 페이지 담당.",
-    techStack: ["Java 17", "Spring MVC", "MyBatis", "Oracle", "JSP", "jQuery"],
-    achievements: [
-      "Oracle LISTAGG로 점검 이력 중복 행 문제 해결",
-      "MyBatis 동적 SQL로 검색 조건 확장성 확보",
-      "공통 Alert/Confirm 모달 컴포넌트 설계",
+    images: [
+      "/portfolio/1.png",
+      "/portfolio/2.png",
+      "/portfolio/3.png",
+      "/portfolio/4.png",
+      "/portfolio/5.png",
     ],
-    thumbnailUrl: "/images/project-billyeogayu.png",
-    githubUrl: "https://github.com/sambbang1027/billyeogayu",
-    notionUrl: "", // TODO: 노션 링크 추가
+    githubUrl: "https://github.com/sambbang1027/seosammy",
+    notionUrl: "https://app.notion.com/p/3584c4b52aec80e08a3bc41b4f477403?v=3584c4b52aec8034b665000caa7e38bc&source=copy_link",
   },
+  // {
+  //   id: 6,
+  //   isFeatured: false,
+  //   title: "빌려가유",
+  //   period: "2025.09",
+  //   shortDescription:
+  //     "농기계 등록부터 예약·사용·점검·재사용까지 전체 라이프사이클을 관리하는 통합 시스템. 점검 관리, 예약 승인/반려 페이지 담당.",
+  //   techStack: ["Java 17", "Spring MVC", "MyBatis", "Oracle", "JSP", "jQuery"],
+  //   achievements: [
+  //     "Oracle LISTAGG로 점검 이력 중복 행 문제 해결",
+  //     "MyBatis 동적 SQL로 검색 조건 확장성 확보",
+  //     "공통 Alert/Confirm 모달 컴포넌트 설계",
+  //   ],
+  //   thumbnailUrl: "/images/project-billyeogayu.png",
+  //   githubUrl: "https://github.com/sambbang1027/billyeogayu",
+  //   notionUrl: "",
+  // },
 ];

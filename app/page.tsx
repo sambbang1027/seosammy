@@ -13,12 +13,12 @@ export default function Home() {
         <AboutMe />
         <EducationSection />
       </section>
-      <section id="skill">
-        <SkillSection />
-      </section>
       <section id="project">
         <ProjectSection />
         <SideProjectSection />
+      </section>
+            <section id="skill">
+        <SkillSection />
       </section>
     </main>
   );

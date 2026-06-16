@@ -1,35 +1,80 @@
+import { IconType } from "react-icons";
+import {
+  SiJavascript, SiTypescript,
+  SiReact, SiVuedotjs, SiJquery,
+  SiSpring,
+  SiPostgresql, SiMysql, SiOracle,
+  SiGooglecloud, SiFirebase, SiGithubactions,
+} from "react-icons/si";
+import { FaJava } from "react-icons/fa";
+
 export const CATEGORIES = ["All", "Language", "Frontend", "Backend", "Database", "Infra"] as const;
 export type CategoryType = (typeof CATEGORIES)[number];
 
 export interface SkillItem {
   name: string;
-  icon: string;
+  icon: IconType;
   desc: string;
 }
 
 const languageSkills: SkillItem[] = [
-  { name: "JavaScript / TypeScript", icon: "react.png", desc: "컴포넌트 기반 아키텍처의 흐름을 이해하고, 정적 타이핑을 통해 안전하고 유지보수하기 쉬운 코드를 작성합니다." },
-  { name: "Java (17)", icon: "react.png", desc: "객체 지향 프로그래밍 원칙을 준수하며, 가독성 높고 확장성 있는 백엔드 비즈니스 로직을 설계합니다." },
+  {
+    name: "JavaScript / TypeScript",
+    icon: SiTypescript,
+    desc: "프로젝트 전반에서 사용한 주력 언어. TypeScript로 타입을 명시하는 습관이 생겼고, 깊은 내부 동작보다는 실제 구현 중심으로 익혔다.",
+  },
+  {
+    name: "Java (17)",
+    icon: FaJava,
+    desc: "백엔드 개발 시 주력으로 사용. 객체지향 설계를 학습하며 썼고, 아직 깊이보다는 실무 적용 수준에 가깝다.",
+  },
 ];
 
 const frontendSkills: SkillItem[] = [
-  { name: "React / React Native", icon: "react.png", desc: "상태 관리와 훅을 능숙하게 활용하며, 모바일 앱 환경(JWT 인증 및 보안 저장소 적용)부터 웹 대시보드까지 다양한 플랫폼의 UI/UX를 주도적으로 구현합니다." },
-  { name: "Vue / jQuery / JSP", icon: "react.png", desc: "레거시 프로젝트와 최신 프레임워크 모두 유연하게 대응할 수 있으며, 데이터 중복 표시 문제를 화면 및 쿼리 단에서 매끄럽게 정제합니다." },
+  {
+    name: "React / React Native",
+    icon: SiReact,
+    desc: "가장 많이 다뤄본 프론트엔드 스택. 훅 기반 구현에 익숙하며, 이 포트폴리오 포함 다수 프로젝트에서 사용했다.",
+  },
+  {
+    name: "Vue / jQuery / JSP",
+    icon: SiVuedotjs,
+    desc: "부트캠프에서 Vue 3로 풀스택 프로젝트를 진행했고, 레거시 환경에서 jQuery와 JSP도 경험했다.",
+  },
 ];
 
 const backendSkills: SkillItem[] = [
-  { name: "Spring Boot / Spring MVC", icon: "react.png", desc: "RESTful API 설계 및 서비스 레이어 분리에 능숙하며, 모놀리식 구조에서 OpenFeign 기반의 MSA 구조로 서비스를 분리한 경험이 있습니다." },
-  { name: "Spring Batch / Scheduler", icon: "react.png", desc: "싱글 스레드 스케줄러의 한계를 파악하고, 멀티 스레드 병렬 처리 구조로 전환하여 데이터 수집 병목을 해결할 수 있습니다." },
+  {
+    name: "Spring Boot / Spring MVC",
+    icon: SiSpring,
+    desc: "REST API 설계와 레이어 분리 구조에 익숙하다. MSA 환경에서 서비스 간 통신(OpenFeign)을 구현한 경험이 있다.",
+  },
+  {
+    name: "Spring Batch / Scheduler",
+    icon: SiSpring,
+    desc: "데장간 프로젝트에서 처음 도입. 싱글 스레드 병목을 직접 겪고 멀티 스레드 병렬 처리로 전환해 수집 시간을 75% 단축했다.",
+  },
 ];
 
 const databaseSkills: SkillItem[] = [
-  { name: "PostgreSQL / MySQL / Oracle", icon: "react.png", desc: "관계형 데이터베이스 모델링 및 인덱스 구조를 이해하며, MyBatis의 동적 SQL 구문을 적극 활용해 코드 중복을 줄이고 유지보수성을 높입니다." },
-  { name: "Redis", icon: "react.png", desc: "세션 관리 및 데이터 캐싱을 통한 성능 최적화 구조를 고민합니다." },
+  {
+    name: "PostgreSQL / MySQL / Oracle",
+    icon: SiPostgresql,
+    desc: "프로젝트마다 다른 RDBMS를 사용했다. 기본 쿼리 작성과 MyBatis 동적 SQL에 익숙하며, 깊은 최적화는 학습 중이다.",
+  },
 ];
 
 const infraSkills: SkillItem[] = [
-  { name: "GCP / Firebase", icon: "react.png", desc: "Cloud 인프라를 활용하여 서비스를 안정적으로 배포하고, Firebase Storage 등을 연동하여 DB 용량 및 메모리 과부하 문제를 구조적으로 개선합니다." },
-  { name: "GitHub Actions", icon: "react.png", desc: "기본적인 CI/CD 파이프라인 구성을 이해하고 협업 프로세스를 자동화합니다." },
+  {
+    name: "GCP / Firebase",
+    icon: SiFirebase,
+    desc: "GCP 기반 서비스 배포와 Firebase Storage 연동을 경험했다. 인프라 설계보다는 서비스 연동 중심으로 활용했다.",
+  },
+  {
+    name: "GitHub Actions",
+    icon: SiGithubactions,
+    desc: "기본적인 CI 파이프라인을 구성해봤다. 깊이 있는 활용보다는 협업 자동화 수준으로 사용했다.",
+  },
 ];
 
 export const SKILL_DATA: Record<CategoryType, SkillItem[]> = {

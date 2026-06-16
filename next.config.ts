@@ -1,4 +1,5 @@
 const nextConfig = {
+  devIndicators: false,
   turbopack: {
     rules: {
       '*.hdr': {

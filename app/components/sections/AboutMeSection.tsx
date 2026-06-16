@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { FiMail, FiGithub } from "react-icons/fi";
 import { ABOUT_ME_DATA } from "../../data/aboutMeData";
 
 const AboutMe = () => {
@@ -42,23 +43,39 @@ const AboutMe = () => {
           />
         </div>
 
-        {/* 3. 가치관 카드 영역 */}
+        {/* 3. 연락처 카드 영역 */}
         <div className="z-20">
-          <div className="w-full bg-[rgba(244,249,255,0.7)] border border-[rgba(218,238,255,0.8)] rounded-[40px] p-8 md:p-8 lg:p-10 backdrop-blur-md shadow-xl">
-            <span className="text-[22px] md:text-[26px] lg:text-[32px] font-bold text-[#004571] block mb-4">
-              Value
+          <div className="w-full bg-[rgba(244,249,255,0.7)] border border-[rgba(218,238,255,0.8)] rounded-[40px] p-8 md:p-8 lg:p-10 backdrop-blur-md shadow-xl flex flex-col gap-6">
+            <span className="text-[22px] md:text-[26px] lg:text-[32px] font-bold text-[#004571]">
+              Contact
             </span>
-            <div className="text-sm md:text-sm lg:text-base text-gray-700 leading-snug space-y-4 break-keep">
-              <p className="font-semibold text-base lg:text-lg text-[#004571]">
-                "{ABOUT_ME_DATA.valueArea.coreValue}"
-              </p>
-              <ul className="space-y-2">
-                {ABOUT_ME_DATA.valueArea.details.map((detail, index) => (
-                  <li key={index}>
-                    <span className="font-bold text-[#004571]">{detail.title}</span>: {detail.desc}
-                  </li>
-                ))}
-              </ul>
+            <div className="flex flex-col gap-4">
+              <a
+                href="mailto:seosi97@gmail.com"
+                className="flex items-center gap-4 group"
+              >
+                <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary transition-colors duration-200">
+                  <FiMail className="w-5 h-5 text-primary group-hover:text-white transition-colors duration-200" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-mono text-neutral-400 mb-0.5">Email</p>
+                  <p className="text-[14px] font-medium text-primary group-hover:underline underline-offset-2">seosi97@gmail.com</p>
+                </div>
+              </a>
+              <a
+                href="https://github.com/sambbang1027"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-4 group"
+              >
+                <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary transition-colors duration-200">
+                  <FiGithub className="w-5 h-5 text-primary group-hover:text-white transition-colors duration-200" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-mono text-neutral-400 mb-0.5">GitHub</p>
+                  <p className="text-[14px] font-medium text-primary group-hover:underline underline-offset-2">sambbang1027</p>
+                </div>
+              </a>
             </div>
           </div>
         </div>
