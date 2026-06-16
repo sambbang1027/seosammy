@@ -21,12 +21,12 @@ const languageSkills: SkillItem[] = [
   {
     name: "JavaScript / TypeScript",
     icon: SiTypescript,
-    desc: "프로젝트 전반에서 사용한 주력 언어. TypeScript로 타입을 명시하는 습관이 생겼고, 깊은 내부 동작보다는 실제 구현 중심으로 익혔다.",
+    desc: "프로젝트 전반에서 사용한 주력 언어. TypeScript로 타입을 명시하는 습관이 생겼고, 실제 프로젝트에서 꾸준히 써오면서 익숙해졌다.",
   },
   {
     name: "Java (17)",
     icon: FaJava,
-    desc: "백엔드 개발 시 주력으로 사용. 객체지향 설계를 학습하며 썼고, 아직 깊이보다는 실무 적용 수준에 가깝다.",
+    desc: "백엔드 개발 시 주력으로 사용. 객체지향 설계를 학습하며 백엔드 전반을 담당했고, 여러 프로젝트를 거치면서 구조를 잡는 감각이 생겼다.",
   },
 ];
 
@@ -34,12 +34,12 @@ const frontendSkills: SkillItem[] = [
   {
     name: "React / React Native",
     icon: SiReact,
-    desc: "가장 많이 다뤄본 프론트엔드 스택. 훅 기반 구현에 익숙하며, 이 포트폴리오 포함 다수 프로젝트에서 사용했다.",
+    desc: "가장 많이 사용한 프론트엔드 스택. 훅 기반으로 여러 프로젝트를 진행했고, 이 포트폴리오도 React로 직접 구현했다.",
   },
   {
     name: "Vue / jQuery / JSP",
     icon: SiVuedotjs,
-    desc: "부트캠프에서 Vue 3로 풀스택 프로젝트를 진행했고, 레거시 환경에서 jQuery와 JSP도 경험했다.",
+    desc: "Vue 3로 풀스택 프로젝트를 진행했고, 레거시 환경에서 jQuery와 JSP도 경험했다. 다양한 프론트엔드 환경에 적응할 수 있다.",
   },
 ];
 
@@ -47,7 +47,7 @@ const backendSkills: SkillItem[] = [
   {
     name: "Spring Boot / Spring MVC",
     icon: SiSpring,
-    desc: "REST API 설계와 레이어 분리 구조에 익숙하다. MSA 환경에서 서비스 간 통신(OpenFeign)을 구현한 경험이 있다.",
+    desc: "REST API 설계와 레이어 분리 구조에 익숙하다. MSA 환경에서 서비스 간 통신(OpenFeign)을 프로젝트에서 직접 구현했다.",
   },
   {
     name: "Spring Batch / Scheduler",
@@ -60,7 +60,7 @@ const databaseSkills: SkillItem[] = [
   {
     name: "PostgreSQL / MySQL / Oracle",
     icon: SiPostgresql,
-    desc: "프로젝트마다 다른 RDBMS를 사용했다. 기본 쿼리 작성과 MyBatis 동적 SQL에 익숙하며, 깊은 최적화는 학습 중이다.",
+    desc: "프로젝트마다 다른 RDBMS를 사용하며 각 환경에 적응했다. 기본 쿼리 작성과 MyBatis 동적 SQL을 프로젝트에서 직접 활용했다.",
   },
 ];
 
@@ -68,12 +68,12 @@ const infraSkills: SkillItem[] = [
   {
     name: "GCP / Firebase",
     icon: SiFirebase,
-    desc: "GCP 기반 서비스 배포와 Firebase Storage 연동을 경험했다. 인프라 설계보다는 서비스 연동 중심으로 활용했다.",
+    desc: "GCP 기반 서비스 배포와 Firebase Storage 연동을 프로젝트에서 경험했다.",
   },
   {
     name: "GitHub Actions",
     icon: SiGithubactions,
-    desc: "기본적인 CI 파이프라인을 구성해봤다. 깊이 있는 활용보다는 협업 자동화 수준으로 사용했다.",
+    desc: "기본적인 CI 파이프라인을 구성해 팀 협업 자동화에 활용했다.",
   },
 ];
 
