@@ -61,14 +61,19 @@ export default function SkillSection() {
           {!isMobile && (
             <>
               {/* 백그라운드 타이틀 텍스트 */}
-              <div className="text-primary text-center font-['Inter-ExtraBold',_sans-serif] text-[110px] font-extrabold 
-                    absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] leading-[110px] 
+              <div className="text-primary text-center font-['Inter-ExtraBold',_sans-serif] text-[110px] font-extrabold
+                    absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] leading-[110px]
                     tracking-tight pointer-events-none z-0 opacity-90 select-none">
                 WHAT<br />CAN I<br />DO?
               </div>
 
+              {/* 인터랙션 힌트 */}
+              <span className="absolute left-1/2 top-[calc(50%-195px)] -translate-x-1/2 text-[13px] font-mono tracking-wide text-primary/30 pointer-events-none z-0 select-none">
+                pop the bubbles
+              </span>
+
               {/* 3D 캔버스 */}
-              <div key="desktop-canvas" className="absolute inset-0 w-full h-full z-10 pointer-events-auto">
+              <div key="desktop-canvas" className="absolute inset-0 w-full h-full z-10 pointer-events-auto bubble-needle-cursor">
                 <BubbleCanvas />
               </div>
             </>
