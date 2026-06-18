@@ -286,7 +286,7 @@ function BubbleEmpty({ position, size = 1 }: {
       const {x, y, z} = meshRef.current.position;
       setPopPosition([x, y, z]);
       setPopped(true);
-    }   
+    }
   }
 
   return (

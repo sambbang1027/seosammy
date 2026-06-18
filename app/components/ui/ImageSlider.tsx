@@ -120,7 +120,7 @@ export default function ImageSlider({
             <button
               key={i}
               onClick={() => go(i)}
-              className={`rounded-full transition-all duration-200 ${
+              className={`rounded-full transition-all duration-200 cursor-pointer ${
                 i === current
                   ? "w-4 h-1.5 bg-white"
                   : "w-1.5 h-1.5 bg-white/50 hover:bg-white/80"
