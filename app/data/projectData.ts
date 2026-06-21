@@ -4,7 +4,7 @@ export interface ProjectItem {
   title: string;
   period: string;
   shortDescription: string;
-  role?: string;
+  role?: string[];
   techStack: string[];
   achievements: string[];
   images: string[];
@@ -20,30 +20,24 @@ export const PROJECT_DATA: ProjectItem[] = [
     title: "데장간 (Dajangan)",
     period: "2025.10 ~ 2025.11",
     shortDescription:
-      "PostgreSQL 데이터베이스 모니터링 시스템. CPU·Memory·Disk I/O 등 주요 메트릭을 수집·시각화하고, 사용자가 지표와 레이아웃을 직접 구성하는 맞춤형 Overview 대시보드를 제공합니다. 기업 연계로 진행해 최종 발표 대상을 수상했습니다.",
-    role:
-      "팀 리더 · Overview 커스터마이징 대시보드(dnd-kit), Joyride 튜토리얼, DB 요약·세션 모니터링·이벤트 로그 페이지 개발, 데이터 수집 병렬화 구조 설계",
+      "PostgreSQL 데이터베이스 모니터링 시스템으로, CPU·Memory·Disk I/O 등 주요 메트릭을 수집·시각화합니다. 기업 연계로 진행해 최종 발표 대상을 수상했습니다.",
+    role: [
+      "팀 리더로서 매주 현업자와 주간 보고를 직접 진행하며 기획 방향을 함께 잡았습니다.",
+      "Overview 커스터마이징 대시보드와 DB 요약·세션 모니터링·이벤트 로그 페이지를 직접 개발했습니다.",
+    ],
     techStack: [
       "Java 17",
       "Spring Boot",
-      "Spring Batch",
       "MyBatis",
-      "JdbcTemplate",
       "React",
       "TypeScript",
       "TanStack Query",
-      "ApexCharts",
-      "dnd-kit",
-      "Joyride",
       "PostgreSQL",
-      "GCP",
       "GitHub Actions",
     ],
     achievements: [
-      "7스레드 병렬 처리로 데이터 수집 구조 재설계 → 수집 시간 2분 → 30초 단축 (75% 개선)",
-      "Mapper XML 없이 자유로운 동적 집계 쿼리 작성을 위해 추이 분석 데이터 처리는 MyBatis 대신 JdbcTemplate으로 분리",
-      "dnd-kit 기반 드래그앤드롭으로 위젯 자유 배치 커스텀 대시보드 구현",
-      "GitHub Actions로 프론트엔드 배포 CI/CD 구성",
+      "프론트 화면에 데이터 공백이 생기는 문제를 발견해 수집 구조를 추적했고, 7스레드 병렬 처리로 재설계해 수집 시간을 2분에서 30초로 단축했습니다.",
+      "main 브랜치에 push할 때마다 수동 배포가 번거로워 GitHub Actions로 빌드부터 VM 배포, nginx reload까지 자동화했습니다.",
     ],
     images: [
       "/dajanggan/1.png",
@@ -63,9 +57,11 @@ export const PROJECT_DATA: ProjectItem[] = [
     title: "북플리 (Bookpli)",
     period: "2024.11 ~ 2024.12",
     shortDescription:
-      "음악 스트리밍과 독서 기록을 결합한 커뮤니티 플랫폼. 유저가 북클럽에 관심을 보일 때만 생성되는 지연 생성 구조로, 불필요한 데이터 적재 없이 독서 경험이 커뮤니티 활동으로 이어지도록 설계했습니다.",
-    role:
-      "도서 리뷰 CRUD API 및 화면 연동 구현, 북클럽(북적북적) 커뮤니티 설계 및 게시글·댓글 기능 개발, 도서 서버 분리·OpenFeign 연동 참여",
+      "Spotify 연동 음악 스트리밍과 독서 기록을 결합한 커뮤니티 플랫폼으로, 북클럽을 통해 독서 경험을 커뮤니티 활동으로 연결합니다.",
+    role: [
+      "도서 리뷰, 북클럽 게시글·댓글 기능의 API와 화면을 모두 설계하고 구현했습니다.",
+      "도서 서버 분리와 OpenFeign 연동 작업에 참여했습니다.",
+    ],
     techStack: [
       "Java 17",
       "Spring Boot",
@@ -78,7 +74,6 @@ export const PROJECT_DATA: ProjectItem[] = [
     achievements: [
       "모든 도서에 북클럽을 미리 생성하지 않고, 유저가 클럽 리스트에 추가할 때 없으면 생성되는 지연 생성(lazy creation) 구조로 설계해 불필요한 데이터 적재 방지",
       "이미지 파일을 DB에 직접 저장하는 대신 Firebase Storage에 업로드 후 URL만 저장하는 구조로 설계해 조회 성능 확보",
-      "Book / Music / User 도메인 기준 서버 분리 작업에 참여, OpenFeign 기반 서비스 간 통신 구성 — 최종 발표 대상 수상",
     ],
     images: ["/bookpli/1.png", "/bookpli/2.png"],
     githubUrl: "https://github.com/mae02142/bookpli",
@@ -111,9 +106,8 @@ export const PROJECT_DATA: ProjectItem[] = [
       "멜론티켓 예매 프로세스를 완전히 시뮬레이션하는 티켓팅 트레이너 Web App. 정각 타임어택부터 대기열·좌석 선점·보안문자까지 6단계 플로우를 재현합니다.",
     techStack: ["React", "Vite", "Tailwind CSS", "Zustand"],
     achievements: [
-      "Zustand로 6단계 게임 플로우 전역 상태 관리",
-      "F5 패널티·봇 시뮬레이션 등 실제 예매 환경 재현",
-      "반응속도 측정값을 다음 스테이지 난이도 가중치로 연산",
+      "useState 하나로 좌석 상태를 관리하다 봇이 갱신 전 값을 읽어 동시에 같은 좌석을 중복 선점하고, 페이지 이동 시 데이터가 초기화되는 문제를 발견해 봇 전용(useRef)·화면 표시(useState)·전역 유지(Zustand)로 역할을 분리해 해결했습니다.",
+      "봇 최초 실행 딜레이를 600~800ms에서 0~80ms로 줄여, 유저가 빠르게 페이지를 이동해도 최신 데이터가 저장되도록 보장했습니다.",
     ],
     images: [
       "/podor/podo1.png",
@@ -146,7 +140,6 @@ export const PROJECT_DATA: ProjectItem[] = [
     achievements: [
       "IntersectionObserver 기반 frameloop 제어로 스크롤 프레임 드랍 해결 (46.8fps → 60fps)",
       "react-spring onChange 중복 호출로 인한 버블 파티클 중복 생성 버그를 useRef 플래그로 해결",
-      "Tailwind CSS v4 @theme 기반 디자인 토큰 시스템 구축",
     ],
     images: [
       "/portfolio/1.png",

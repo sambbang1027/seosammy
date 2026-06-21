@@ -59,23 +59,37 @@ export default function ProjectSection() {
                   <p className="text-[15px] text-neutral-500 leading-relaxed break-keep">
                     {project.shortDescription}
                   </p>
-                  {project.role && (
-                    <p className="text-[13px] text-primary/80 leading-relaxed break-keep bg-primary/[0.04] rounded-lg px-3 py-2">
-                      <span className="font-semibold">담당</span> · {project.role}
-                    </p>
+                  {project.role && project.role.length > 0 && (
+                    <div className="bg-primary/[0.04] rounded-lg px-3 py-2 flex flex-col gap-1">
+                      <span className="text-[13px] font-semibold text-primary/80">담당</span>
+                      <ul className="flex flex-col gap-1">
+                        {project.role.map((item, i) => (
+                          <li
+                            key={i}
+                            className="flex items-start gap-2 text-[13px] text-primary/80 leading-relaxed break-keep"
+                          >
+                            <span className="mt-[7px] w-1 h-1 rounded-full bg-primary/40 flex-shrink-0" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
                   {project.achievements.length > 0 && (
-                    <ul className="flex flex-col gap-2">
-                      {project.achievements.map((achievement, i) => (
-                        <li
-                          key={i}
-                          className="flex items-start gap-2 text-[13px] text-neutral-500 leading-relaxed break-keep"
-                        >
-                          <span className="mt-[7px] w-1 h-1 rounded-full bg-primary/40 flex-shrink-0" />
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="flex flex-col gap-2">
+                      <p className="text-[13px] font-semibold text-neutral-700">성과</p>
+                      <ul className="flex flex-col gap-2">
+                        {project.achievements.map((achievement, i) => (
+                          <li
+                            key={i}
+                            className="flex items-start gap-2 text-[13px] text-neutral-500 leading-relaxed break-keep"
+                          >
+                            <span className="mt-[7px] w-1 h-1 rounded-full bg-primary/40 flex-shrink-0" />
+                            {achievement}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
                   <div className="flex flex-wrap gap-2">
                     {project.techStack.map((tech, i) => (
