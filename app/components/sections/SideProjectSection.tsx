@@ -25,18 +25,30 @@ function SideProjectCard({ project, index }: { project: ProjectItem; index: numb
       >
         <ImageSlider images={project.images} title={project.title} aspectClass="aspect-[4/3]" showArrows={false} playing={hovered} />
 
-        {/* 호버 오버레이 + 링크 버튼 */}
-        <div className={`absolute inset-0 rounded-xl transition-all duration-300 pointer-events-none ${hovered ? "bg-black/40" : "bg-black/0"}`} />
+        {/* 데스크톱: 호버 오버레이 + 중앙 버튼 */}
+        <div className={`absolute inset-0 rounded-xl transition-all duration-300 pointer-events-none hidden md:block ${hovered ? "bg-black/40" : "bg-black/0"}`} />
         {primaryLink && (
           <a
             href={primaryLink}
             target="_blank"
             rel="noreferrer"
-            className="absolute inset-0 flex items-center justify-center rounded-xl"
+            className="hidden md:flex absolute inset-0 items-center justify-center rounded-xl"
           >
             <span className={`w-11 h-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 shadow-lg ${hovered ? "opacity-100 scale-100" : "opacity-0 scale-75"}`}>
               <FiArrowUpRight className="w-5 h-5 text-primary" strokeWidth={2.5} />
             </span>
+          </a>
+        )}
+
+        {/* 모바일: 우상단 링크 버튼 (항상 보임) */}
+        {primaryLink && (
+          <a
+            href={primaryLink}
+            target="_blank"
+            rel="noreferrer"
+            className="md:hidden absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md z-10"
+          >
+            <FiArrowUpRight className="w-4 h-4 text-primary" strokeWidth={2.5} />
           </a>
         )}
       </div>

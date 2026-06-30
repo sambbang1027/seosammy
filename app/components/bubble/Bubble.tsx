@@ -243,8 +243,8 @@ function BubbleEmpty({ position, size = 1 }: {
   const {viewport} = useThree();
   const meshRef = useRef<THREE.Mesh>(null);
   /** 반응형 위치 계산 (기준점) */
-  const responsiveX =  (position[0] / 10) * viewport.width; 
-  const responsiveY = (position[1] / 10) * viewport.height; 
+  const responsiveX =  (position[0] / 10) * viewport.width;
+  const responsiveY = (position[1] / 10) * viewport.height;
 
   // 각 버블마다 다른 위상/주파수 오프셋 (컴포넌트 마운트 시 1회만 생성)
   const [offset] = useState(() => ({
@@ -256,9 +256,10 @@ function BubbleEmpty({ position, size = 1 }: {
   }));
   const { popped, setPopped, visible, scale, showParticles, handleParticlesComplete } = useBubbleAnimation();
   const [popPosition, setPopPosition] = useState<[number, number, number]>([0, 0, 0]);
+  const isHoveredRef = useRef(false);
 
   // ─────────────────────────────────────────
-  // 두둥실 모션 
+  // 두둥실 모션 + 호버 wobble
   // ─────────────────────────────────────────
   useFrame((state) => {
     if (meshRef.current && visible && !popped) {
@@ -270,11 +271,14 @@ function BubbleEmpty({ position, size = 1 }: {
       meshRef.current.position.set(
         responsiveX + moveX,
         responsiveY + moveY,
-        position[2] 
+        position[2]
       );
-     
+
       meshRef.current.rotation.x = Math.sin(time * 0.5 + offset.phase) * 0.05;
       meshRef.current.rotation.y = Math.cos(time * 0.3 + offset.phase) * 0.05;
+      meshRef.current.rotation.z = isHoveredRef.current
+        ? Math.sin(time * 9 + offset.phase) * 0.07
+        : 0;
     }
   });
 
@@ -297,6 +301,8 @@ function BubbleEmpty({ position, size = 1 }: {
           position={[responsiveX, responsiveY, position[2]]}
           scale={scale}
           onClick={handlePop}
+          onPointerOver={() => { isHoveredRef.current = true; }}
+          onPointerOut={() => { isHoveredRef.current = false; }}
         >
           {/* 구체 모양 (size = 반지름, 64x64 폴리곤) */}
           <sphereGeometry args={[size, 64, 64]} />
@@ -338,25 +344,29 @@ function BubbleWithIcon({ position, size = 1, icon, iconRotation = 0, iconPositi
     ampY:  0.08 + Math.random() * 0.07,
     ampX:  0.03 + Math.random() * 0.04,
   }));
+  const isHoveredRef = useRef(false);
 
-  /** 두둥실 모션 */
+  /** 두둥실 모션 + 호버 wobble */
   useFrame((state) => {
-    if (meshRef.current && visible && !popped) { 
-      const time = state.clock.getElapsedTime(); // 시간에 따라 위치와 회전 업데이트
-      
-      // 반응형 위치 + 두둥실 모션
+    if (meshRef.current && visible && !popped) {
+      const time = state.clock.getElapsedTime();
+
       const moveX = Math.cos(time * offset.freqX + offset.phase) * offset.ampX;
       const moveY = Math.sin(time * offset.freqY + offset.phase) * offset.ampY;
 
       meshRef.current.position.set(
         responsiveX + moveX,
         responsiveY + moveY,
-        position[2] 
-      )
+        position[2]
+      );
 
       meshRef.current.rotation.x = Math.sin(time * 0.5 + offset.phase) * 0.05;
       meshRef.current.rotation.y = Math.cos(time * 0.3 + offset.phase) * 0.05;
-    }});
+      meshRef.current.rotation.z = isHoveredRef.current
+        ? Math.sin(time * 9 + offset.phase) * 0.07
+        : 0;
+    }
+  });
 
 
 
@@ -376,7 +386,7 @@ function BubbleWithIcon({ position, size = 1, icon, iconRotation = 0, iconPositi
       if(skillCategory){
         window.dispatchEvent(new CustomEvent("bubblePop", {detail: skillCategory}));
       }
-    }   
+    }
   }
 
   return (
@@ -385,7 +395,9 @@ function BubbleWithIcon({ position, size = 1, icon, iconRotation = 0, iconPositi
         <animated.mesh
           position={[responsiveX, responsiveY, position[2]]}
           scale={scale}
-          onClick={handlePop} // 클릭 시 터짐
+          onClick={handlePop}
+          onPointerOver={() => { isHoveredRef.current = true; }}
+          onPointerOut={() => { isHoveredRef.current = false; }}
           ref={meshRef}
         >
           {/* 구체 모양 (size = 반지름, 64x64 폴리곤) */}

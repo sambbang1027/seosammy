@@ -23,6 +23,7 @@ export default function ImageSlider({
   const [direction, setDirection] = useState(1);
   const [internalHover, setInternalHover] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const touchStartX = useRef<number>(0);
 
   const isPlaying = playing !== undefined ? playing : internalHover;
 
@@ -69,11 +70,25 @@ export default function ImageSlider({
     );
   }
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) next();
+      else prev();
+    }
+  };
+
   return (
     <div
       className={`relative w-full ${aspectClass} rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(0,55,91,0.10)] group bg-[#f0f4f8]`}
       onMouseEnter={() => playing === undefined && setInternalHover(true)}
       onMouseLeave={() => playing === undefined && setInternalHover(false)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
