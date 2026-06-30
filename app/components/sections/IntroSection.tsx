@@ -37,9 +37,9 @@ const inrtoBubbles = [
 
 // 네비 버튼 위치/각도는 기존 코드 그대로 유지
 const NAV_ITEMS = [
-  { label: "About Me", target: "about", className: "absolute left-[-50px] top-[30%]", rotate: "-rotate-[10deg]" },
-  { label: "Skill",    target: "skill",  className: "absolute right-[-10px] top-[60%]", rotate: "rotate-[10deg]" },
-  { label: "Project",  target: "project", className: "absolute left-[60px] bottom-[-12%]", rotate: "rotate-[8deg]" },
+  { label: "About Me", target: "about", className: "absolute left-[-10px] top-[30%]", rotate: "-rotate-[10deg]" },
+  { label: "Skill",    target: "skill",  className: "absolute right-[0px] top-[60%]", rotate: "rotate-[10deg]" },
+  { label: "Project",  target: "project", className: "absolute left-[70px] bottom-[8%]", rotate: "rotate-[8deg]" },
 ];
 
 const scrollTo = (id: string) => {
@@ -69,21 +69,19 @@ export default function IntroSection() {
         
 
         {/* 3. 얼굴 & 네비 통합 컨테이너 */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-[18%] md:top-[21%]
-                        w-[70vw] md:w-[45vw] lg:w-[500px] 
+        <div className="absolute left-1/2 -translate-x-1/2 top-[15%] md:top-[17%]
+                        w-[50vw] md:w-[40vw] lg:w-[450px] 
                         z-40 pointer-events-none
                         flex flex-col items-center">
           <div className="relative w-full">
 
-            {/* 얼굴 이미지 */}
             <Image
-              src="/images/for3d.png"
+              src="/images/itsme.png"
               alt="서샘이"
-              width={800}
-              height={800}
-              priority // 빠르게 로드될 수 있도록 우선순위 지정
-              className="w-full h-auto
-                         object-contain relative"
+              width={400}
+              height={400}
+              priority
+              className="w-full h-auto object-contain relative"
             />
 
             {/* 네비 버튼들 */}
@@ -114,7 +112,7 @@ export default function IntroSection() {
                   key={target}
                   href={`#${target}`}
                   onClick={(e) => { e.preventDefault(); scrollTo(target); }}
-                  className="px-6 py-3 bg-white/20 backdrop-blur-md border border-white/30 
+                  className="px-6 py-2 bg-white/20 backdrop-blur-md border border-white/30 
                    rounded-full text-white text-md font-medium active:scale-95 transition-transform"
             >
                   {label}

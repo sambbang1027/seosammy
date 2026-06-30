@@ -8,6 +8,7 @@ interface BubbleConfig{
     icon?: string;
     iconRotation?: number;
     iconPosition?: [number, number, number];
+    skillCategory?: string;
 }
 
 interface BubbleContextType {

@@ -11,7 +11,7 @@
 
 | 구분 | 기술 |
 |---|---|
-| 프레임워크 | Next.js (App Router) |
+| 프레임워크 | Next.js 16 (App Router) |
 | 언어 | TypeScript 5 |
 | 스타일 | Tailwind CSS v4 |
 | 3D | Three.js · React Three Fiber · React Three Drei |
