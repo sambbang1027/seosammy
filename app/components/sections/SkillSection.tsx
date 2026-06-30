@@ -68,8 +68,8 @@ export default function SkillSection() {
               </div>
 
               {/* 인터랙션 힌트 */}
-              <span className="absolute left-1/2 top-[calc(50%-195px)] -translate-x-1/2 text-[13px] font-mono tracking-wide text-primary/30 pointer-events-none z-0 select-none">
-                pop the bubbles
+              <span className="absolute left-1/2 top-[calc(50%-195px)] -translate-x-1/2 text-[13px] font-mono tracking-widest text-primary/50 pointer-events-none z-0 select-none animate-pulse">
+                버블을 터뜨려보세요
               </span>
 
               {/* 3D 캔버스 */}

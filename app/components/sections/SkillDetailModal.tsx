@@ -1,51 +1,20 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { CATEGORIES, CategoryType, SKILL_DATA, SkillItem, SkillLevel } from "@/app/data/skillDetailData";
+import { CATEGORIES, CategoryType, SKILL_DATA, SkillItem } from "@/app/data/skillDetailData";
 
 interface SkillDetailModalProps {
   skillCategory: string | null;
   onClose: () => void;
 }
 
-const BAR_DISPLAY: Record<SkillLevel, { text: "중" | "하"; bar: string }> = {
-  주력: { text: "중", bar: "bg-primary w-[68%]" },
-  활용: { text: "중", bar: "bg-primary/60 w-[45%]" },
-  경험: { text: "하", bar: "bg-primary/30 w-[25%]" },
-};
-
-const LEVEL_STYLE: Record<"중" | "하", string> = {
-  중: "text-primary border border-primary/50",
-  하: "text-neutral-400 border border-neutral-300",
-};
-
-function SkillLevelBadge({ level }: { level: SkillLevel }) {
-  const text = BAR_DISPLAY[level].text;
+function SkillMiniBar({ skill }: { skill: SkillItem }) {
   return (
-    <span
-      className={`ml-auto flex-shrink-0 text-[10px] font-mono px-2 py-0.5 rounded-full ${LEVEL_STYLE[text]}`}
-    >
-      {text}
-    </span>
-  );
-}
-
-function SkillMiniBar({ skill, showBar = true }: { skill: SkillItem; showBar?: boolean }) {
-  const { text, bar } = BAR_DISPLAY[skill.level];
-  return (
-    <div className="flex flex-col gap-1.5 px-2.5 py-2 rounded-lg border border-neutral-200 min-w-[120px]">
-      <span className="flex items-center gap-1.5 text-[12px] font-medium text-neutral-900 whitespace-nowrap">
-        <skill.icon className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+    <div className="flex items-center gap-1.5 px-2.5 py-2 rounded-lg border border-neutral-200 min-w-[120px]">
+      <skill.icon className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+      <span className="text-[12px] font-medium text-neutral-900 whitespace-nowrap">
         {skill.name}
-        {showBar && (
-          <span className="ml-auto text-[10px] font-mono text-neutral-400">{text}</span>
-        )}
       </span>
-      {showBar && (
-        <div className="h-[3px] w-full bg-neutral-100 rounded-full overflow-hidden">
-          <div className={`h-full rounded-full ${bar}`} />
-        </div>
-      )}
     </div>
   );
 }
@@ -137,7 +106,7 @@ export default function SkillDetailModal({ skillCategory, onClose }: SkillDetail
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {SKILL_DATA[cat].map((skill, index) => (
-                      <SkillMiniBar key={index} skill={skill} showBar={cat !== "Infra"} />
+                      <SkillMiniBar key={index} skill={skill} />
                     ))}
                   </div>
                 </div>
@@ -150,7 +119,6 @@ export default function SkillDetailModal({ skillCategory, onClose }: SkillDetail
                     <h4 className="text-[16px] font-semibold text-neutral-900">
                       {skill.name}
                     </h4>
-                    <SkillLevelBadge level={skill.level} />
                   </div>
                   <p className="text-[14px] text-neutral-500 font-normal leading-relaxed pl-[34px]">
                     {skill.desc}
@@ -239,7 +207,7 @@ export default function SkillDetailModal({ skillCategory, onClose }: SkillDetail
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {SKILL_DATA[cat].map((skill, index) => (
-                      <SkillMiniBar key={index} skill={skill} showBar={cat !== "Infra"} />
+                      <SkillMiniBar key={index} skill={skill} />
                     ))}
                   </div>
                 </div>
@@ -252,7 +220,6 @@ export default function SkillDetailModal({ skillCategory, onClose }: SkillDetail
                     <h4 className="text-[15px] font-semibold text-neutral-900">
                       {skill.name}
                     </h4>
-                    <SkillLevelBadge level={skill.level} />
                   </div>
                   <p className="text-[13px] text-neutral-500 font-normal leading-relaxed pl-[30px]">
                     {skill.desc}
